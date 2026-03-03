@@ -71,7 +71,7 @@ interface PublishResult {
   similar: SimilarSnapshot[];
 }
 
-const API_URL = 'http://localhost:3000';
+const API_URL = 'https://feedlens-8owlvgk5v-timous-projects-ec0833cf.vercel.app';
 
 // ─── i18n helper ──────────────────────────────────────────────────────────
 
