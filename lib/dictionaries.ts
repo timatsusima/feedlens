@@ -9,6 +9,7 @@ const en = {
     discover:  '🔍 Discover',
     admin:     'Admin',
     langSwitch: 'RU',
+    privacy:   'Privacy Policy',
   },
 
   home: {
@@ -132,6 +133,7 @@ const ru: typeof en = {
     discover:  '\ud83d\udd0d Discover',
     admin:     'Админ',
     langSwitch: 'EN',
+    privacy:   'Конфиденциальность',
   },
 
   home: {

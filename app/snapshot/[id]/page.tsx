@@ -1,11 +1,60 @@
 import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
 import { prisma } from '@/lib/prisma';
 import { getLocale } from '@/lib/locale';
 import { getDictionary } from '@/lib/dictionaries';
 import RemovalModal from './RemovalModal';
 
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? 'https://feedlens.vercel.app';
+
 interface PageProps {
   params: Promise<{ id: string }>;
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { id } = await params;
+
+  const snapshot = await prisma.snapshot.findUnique({
+    where: { id, deletedAt: null },
+    select: {
+      nickname: true, city: true, ageBucket: true,
+      description: true, videos: { take: 1, orderBy: { position: 'asc' }, select: { videoId: true } },
+      _count: { select: { videos: true } },
+    },
+  });
+
+  if (!snapshot) return { title: 'Snapshot not found · FeedLens' };
+
+  const who   = [snapshot.nickname, snapshot.city, snapshot.ageBucket].filter(Boolean).join(', ');
+  const count = snapshot._count.videos;
+  const title = `${snapshot.nickname}'s YouTube Snapshot · FeedLens`;
+  const desc  = snapshot.description
+    ?? `${who} — ${count} YouTube recommendations`;
+
+  // Use first video thumbnail as OG image
+  const firstVideoId = snapshot.videos[0]?.videoId;
+  const ogImage = firstVideoId
+    ? `https://img.youtube.com/vi/${firstVideoId}/maxresdefault.jpg`
+    : `${BASE_URL}/og-default.png`;
+
+  return {
+    title,
+    description: desc,
+    openGraph: {
+      title,
+      description: desc,
+      url: `${BASE_URL}/snapshot/${id}`,
+      siteName: 'FeedLens',
+      images: [{ url: ogImage, width: 1280, height: 720, alt: title }],
+      type: 'article',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description: desc,
+      images: [ogImage],
+    },
+  };
 }
 
 export default async function SnapshotPage({ params }: PageProps) {
@@ -151,24 +200,3 @@ function isValidTZ(tz: string): boolean {
   catch { return false; }
 }
 
-export async function generateMetadata({ params }: PageProps) {
-  const { id } = await params;
-  const locale = await getLocale();
-
-  const snapshot = await prisma.snapshot.findUnique({
-    where: { id },
-    select: { nickname: true, city: true, deletedAt: true },
-  });
-
-  if (!snapshot || snapshot.deletedAt) {
-    return { title: locale === 'ru' ? 'Снапшот не найден' : 'Snapshot Not Found' };
-  }
-
-  const city = snapshot.city ? (locale === 'ru' ? ` из ${snapshot.city}` : ` from ${snapshot.city}`) : '';
-  return {
-    title: `${snapshot.nickname} · FeedLens`,
-    description: locale === 'ru'
-      ? `Рекомендации YouTube пользователя ${snapshot.nickname}${city}`
-      : `${snapshot.nickname}'s YouTube recommendations${city}`,
-  };
-}
