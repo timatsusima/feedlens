@@ -1,0 +1,161 @@
+{
+  "ext_name": {
+    "message": "FeedLens"
+  },
+  "ext_description": {
+    "message": "Publish snapshots of your YouTube recommendations"
+  },
+
+  "popup_not_youtube": {
+    "message": "Open youtube.com to use FeedLens."
+  },
+  "popup_btn_publish": {
+    "message": "📸 Publish My Snapshot"
+  },
+  "popup_hint_publish": {
+    "message": "Captures top 50 videos from your homepage feed"
+  },
+  "popup_section_view": {
+    "message": "👁 View Someone's Snapshot"
+  },
+  "popup_input_placeholder": {
+    "message": "Paste snapshot ID or URL…"
+  },
+  "popup_btn_load": {
+    "message": "Load Snapshot"
+  },
+  "popup_btn_exit": {
+    "message": "✕ Exit View"
+  },
+  "popup_btn_scrolling": {
+    "message": "Scrolling & collecting…"
+  },
+  "popup_btn_loading": {
+    "message": "Loading…"
+  },
+  "popup_viewing_label": {
+    "message": "👁 Viewing $name$'s snapshot",
+    "placeholders": {
+      "name": { "content": "$1" }
+    }
+  },
+  "popup_error_not_ready": {
+    "message": "Content script not ready. Reload the YouTube page."
+  },
+  "popup_error_collecting": {
+    "message": "Error collecting videos"
+  },
+  "popup_error_load_failed": {
+    "message": "Failed to load snapshot"
+  },
+
+  "modal_title": {
+    "message": "📸 Publish Snapshot"
+  },
+  "modal_badge_ok": {
+    "message": "✓ $count$ videos",
+    "placeholders": {
+      "count": { "content": "$1" }
+    }
+  },
+  "modal_badge_partial": {
+    "message": "⚠ Partial ($collected$/$target$)",
+    "placeholders": {
+      "collected": { "content": "$1" },
+      "target":    { "content": "$2" }
+    }
+  },
+  "modal_duplicates": {
+    "message": "$count$ duplicates",
+    "placeholders": {
+      "count": { "content": "$1" }
+    }
+  },
+  "modal_collected_suffix": {
+    "message": "collected from your YouTube homepage."
+  },
+  "modal_lbl_nickname": {
+    "message": "Nickname"
+  },
+  "modal_lbl_city": {
+    "message": "City"
+  },
+  "modal_lbl_age": {
+    "message": "Age Range"
+  },
+  "modal_lbl_desc": {
+    "message": "Description"
+  },
+  "modal_opt_age_none": {
+    "message": "Prefer not to say"
+  },
+  "modal_ph_nickname": {
+    "message": "e.g., tech_enthusiast"
+  },
+  "modal_ph_city": {
+    "message": "e.g., Almaty"
+  },
+  "modal_ph_desc": {
+    "message": "Optional: describe your interests…"
+  },
+  "modal_btn_cancel": {
+    "message": "Cancel"
+  },
+  "modal_btn_publish": {
+    "message": "Publish"
+  },
+  "modal_btn_publishing": {
+    "message": "Publishing…"
+  },
+  "modal_alert_no_nickname": {
+    "message": "Please enter a nickname"
+  },
+
+  "success_title": {
+    "message": "✅ Published!"
+  },
+  "success_text": {
+    "message": "Your snapshot is public."
+  },
+  "success_btn_copy": {
+    "message": "Copy"
+  },
+  "success_btn_copied": {
+    "message": "Copied!"
+  },
+  "success_token_label": {
+    "message": "🔑 Removal Token — save it now, shown only once:"
+  },
+  "success_token_hint": {
+    "message": "Use this token on the snapshot page to request removal. It cannot be recovered if lost."
+  },
+  "success_similar_title": {
+    "message": "Others in your area are also watching:"
+  },
+  "success_explore": {
+    "message": "🔍 Explore what others watch →"
+  },
+  "success_btn_view": {
+    "message": "View My Snapshot"
+  },
+  "success_btn_close": {
+    "message": "Close"
+  },
+
+  "banner_viewing": {
+    "message": "Viewing $name$'s snapshot",
+    "placeholders": {
+      "name": { "content": "$1" }
+    }
+  },
+  "banner_open_page": {
+    "message": "Open Page"
+  },
+  "banner_exit": {
+    "message": "✕ Exit View"
+  },
+
+  "error_no_videos": {
+    "message": "No videos found. Make sure you are on the YouTube homepage."
+  }
+}

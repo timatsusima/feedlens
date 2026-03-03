@@ -1,0 +1,15 @@
+-- AlterTable
+ALTER TABLE "snapshots" ADD COLUMN     "collected_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ADD COLUMN     "collected_count" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "collector_version" TEXT,
+ADD COLUMN     "deleted_at" TIMESTAMP(3),
+ADD COLUMN     "deletion_reason" TEXT,
+ADD COLUMN     "deletion_token_hash" TEXT,
+ADD COLUMN     "duplicate_count" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "is_partial" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "locale" TEXT,
+ADD COLUMN     "schema_version" INTEGER NOT NULL DEFAULT 1,
+ADD COLUMN     "surface" TEXT NOT NULL DEFAULT 'home',
+ADD COLUMN     "target_count" INTEGER NOT NULL DEFAULT 50,
+ADD COLUMN     "timezone" TEXT,
+ADD COLUMN     "unique_video_count" INTEGER NOT NULL DEFAULT 0;

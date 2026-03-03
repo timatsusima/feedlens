@@ -1,0 +1,7 @@
+# Extension dependencies
+node_modules/
+dist/
+
+# Build files
+*.js
+*.js.map

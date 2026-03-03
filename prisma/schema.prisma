@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Snapshot {
+  id          String   @id @default(uuid())
+  nickname    String
+  city        String?
+  ageBucket   String?  @map("age_bucket")
+  description String?
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  // Schema versioning — increment when payload shape changes
+  schemaVersion Int @default(1) @map("schema_version")
+
+  // Collection context
+  surface     String   @default("home")  @map("surface") // "home" | "watchnext"
+  collectedAt DateTime @default(now())   @map("collected_at")
+  timezone    String?  // IANA name ("Europe/Moscow") or offset ("+05:00")
+  locale      String?  // BCP-47 tag e.g. "ru-RU"
+
+  // Quality flags
+  targetCount      Int     @default(50)    @map("target_count")
+  collectedCount   Int     @default(0)     @map("collected_count")
+  uniqueVideoCount Int     @default(0)     @map("unique_video_count")
+  duplicateCount   Int     @default(0)     @map("duplicate_count")
+  isPartial        Boolean @default(false) @map("is_partial")
+  collectorVersion String? @map("collector_version")
+
+  // Soft delete + user-initiated removal
+  deletedAt         DateTime? @map("deleted_at")
+  deletionReason    String?   @map("deletion_reason")
+  deletionTokenHash String?   @map("deletion_token_hash")
+
+  videos Video[]
+
+  @@index([createdAt])
+  @@index([deletedAt])
+  @@index([city])
+  @@index([ageBucket])
+  @@index([city, ageBucket])
+  @@map("snapshots")
+}
+
+model Video {
+  id         String   @id @default(uuid())
+  snapshotId String   @map("snapshot_id")
+  snapshot   Snapshot @relation(fields: [snapshotId], references: [id], onDelete: Cascade)
+  videoId    String   @map("video_id")
+  title      String
+  channel    String
+  position   Int
+
+  @@index([snapshotId])
+  @@index([videoId])
+  @@map("videos")
+}

@@ -1,0 +1,12 @@
+{
+  "name": "feedlens-extension",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && cp manifest.json dist/ && cp styles.css dist/ && cp popup.html dist/ && cp popup.css dist/ && cp *.png dist/ 2>/dev/null; cp -r _locales dist/",
+    "watch": "tsc --watch"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.268",
+    "typescript": "^5.3.3"
+  }
+}

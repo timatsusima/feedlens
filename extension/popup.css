@@ -1,0 +1,167 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #fff;
+  width: 300px;
+  color: #0f0f0f;
+}
+
+.popup {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.popup-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 16px;
+  background: #ff0000;
+  color: white;
+}
+
+.popup-logo {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.popup-title {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+/* Notice */
+.popup-notice {
+  padding: 20px 16px;
+  font-size: 13px;
+  color: #606060;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.popup-notice strong {
+  color: #0f0f0f;
+}
+
+/* Sections */
+.popup-section {
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.popup-section-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #0f0f0f;
+}
+
+.popup-hint {
+  font-size: 11px;
+  color: #909090;
+  margin-top: -2px;
+}
+
+.popup-divider {
+  height: 1px;
+  background: #f0f0f0;
+  margin: 0 16px;
+}
+
+/* Buttons */
+.btn {
+  border: none;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 9px 18px;
+  transition: background 0.15s ease, opacity 0.15s ease;
+  font-family: inherit;
+  text-align: center;
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.btn-publish {
+  background: #ff0000;
+  color: white;
+  width: 100%;
+  font-size: 14px;
+  padding: 11px;
+}
+
+.btn-publish:hover:not(:disabled) {
+  background: #d90000;
+}
+
+.btn-view {
+  background: #065fd4;
+  color: white;
+  width: 100%;
+  margin-top: 2px;
+}
+
+.btn-view:hover:not(:disabled) {
+  background: #0556c4;
+}
+
+.btn-exit {
+  background: #f0f0f0;
+  color: #0f0f0f;
+  width: 100%;
+  margin-top: 6px;
+}
+
+.btn-exit:hover:not(:disabled) {
+  background: #e0e0e0;
+}
+
+/* Input */
+.popup-input {
+  width: 100%;
+  padding: 8px 11px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 12px;
+  font-family: monospace;
+  color: #0f0f0f;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.popup-input:focus {
+  border-color: #065fd4;
+}
+
+/* Error */
+.popup-error {
+  font-size: 12px;
+  color: #c00;
+  padding: 6px 10px;
+  background: #fff0f0;
+  border-radius: 6px;
+}
+
+/* Viewing bar */
+.viewing-label {
+  display: block;
+  font-size: 12px;
+  color: #065fd4;
+  font-weight: 500;
+  padding: 6px 0 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -1,0 +1,161 @@
+{
+  "ext_name": {
+    "message": "FeedLens"
+  },
+  "ext_description": {
+    "message": "Публикуй снапшоты своих рекомендаций YouTube"
+  },
+
+  "popup_not_youtube": {
+    "message": "Открой youtube.com, чтобы использовать FeedLens."
+  },
+  "popup_btn_publish": {
+    "message": "📸 Опубликовать мой снапшот"
+  },
+  "popup_hint_publish": {
+    "message": "Собирает топ-50 видео с главной страницы"
+  },
+  "popup_section_view": {
+    "message": "👁 Просмотр чужого снапшота"
+  },
+  "popup_input_placeholder": {
+    "message": "Вставь ID или ссылку на снапшот…"
+  },
+  "popup_btn_load": {
+    "message": "Загрузить снапшот"
+  },
+  "popup_btn_exit": {
+    "message": "✕ Выйти"
+  },
+  "popup_btn_scrolling": {
+    "message": "Прокрутка и сбор…"
+  },
+  "popup_btn_loading": {
+    "message": "Загрузка…"
+  },
+  "popup_viewing_label": {
+    "message": "👁 Снапшот пользователя $name$",
+    "placeholders": {
+      "name": { "content": "$1" }
+    }
+  },
+  "popup_error_not_ready": {
+    "message": "Скрипт не готов. Перезагрузи страницу YouTube."
+  },
+  "popup_error_collecting": {
+    "message": "Ошибка при сборе видео"
+  },
+  "popup_error_load_failed": {
+    "message": "Не удалось загрузить снапшот"
+  },
+
+  "modal_title": {
+    "message": "📸 Опубликовать снапшот"
+  },
+  "modal_badge_ok": {
+    "message": "✓ $count$ видео",
+    "placeholders": {
+      "count": { "content": "$1" }
+    }
+  },
+  "modal_badge_partial": {
+    "message": "⚠ Частично ($collected$/$target$)",
+    "placeholders": {
+      "collected": { "content": "$1" },
+      "target":    { "content": "$2" }
+    }
+  },
+  "modal_duplicates": {
+    "message": "$count$ дубликатов",
+    "placeholders": {
+      "count": { "content": "$1" }
+    }
+  },
+  "modal_collected_suffix": {
+    "message": "собрано с главной страницы YouTube."
+  },
+  "modal_lbl_nickname": {
+    "message": "Никнейм"
+  },
+  "modal_lbl_city": {
+    "message": "Город"
+  },
+  "modal_lbl_age": {
+    "message": "Возраст"
+  },
+  "modal_lbl_desc": {
+    "message": "Описание"
+  },
+  "modal_opt_age_none": {
+    "message": "Не указывать"
+  },
+  "modal_ph_nickname": {
+    "message": "напр., tech_enthusiast"
+  },
+  "modal_ph_city": {
+    "message": "напр., Алматы"
+  },
+  "modal_ph_desc": {
+    "message": "Опционально: опишите свои интересы…"
+  },
+  "modal_btn_cancel": {
+    "message": "Отмена"
+  },
+  "modal_btn_publish": {
+    "message": "Опубликовать"
+  },
+  "modal_btn_publishing": {
+    "message": "Публикация…"
+  },
+  "modal_alert_no_nickname": {
+    "message": "Пожалуйста, введи никнейм"
+  },
+
+  "success_title": {
+    "message": "✅ Опубликовано!"
+  },
+  "success_text": {
+    "message": "Ваш снапшот теперь публичный."
+  },
+  "success_btn_copy": {
+    "message": "Копировать"
+  },
+  "success_btn_copied": {
+    "message": "Скопировано!"
+  },
+  "success_token_label": {
+    "message": "🔑 Токен удаления — сохрани сейчас, показывается только раз:"
+  },
+  "success_token_hint": {
+    "message": "Используй этот токен на странице снапшота для его удаления. Восстановить нельзя."
+  },
+  "success_similar_title": {
+    "message": "Другие в твоём регионе тоже смотрят:"
+  },
+  "success_explore": {
+    "message": "🔍 Смотри, что смотрят другие →"
+  },
+  "success_btn_view": {
+    "message": "Мой снапшот"
+  },
+  "success_btn_close": {
+    "message": "Закрыть"
+  },
+
+  "banner_viewing": {
+    "message": "Снапшот пользователя $name$",
+    "placeholders": {
+      "name": { "content": "$1" }
+    }
+  },
+  "banner_open_page": {
+    "message": "Открыть страницу"
+  },
+  "banner_exit": {
+    "message": "✕ Выйти"
+  },
+
+  "error_no_videos": {
+    "message": "Видео не найдены. Убедись, что открыта главная страница YouTube."
+  }
+}

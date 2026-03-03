@@ -1,0 +1,544 @@
+/* FeedLens Extension Styles — injected into YouTube page */
+
+/* ── Modal ───────────────────────────────────── */
+.feedlens-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: feedlens-fadeIn 0.2s ease;
+}
+
+@keyframes feedlens-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.feedlens-modal-content {
+  background: white;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  animation: feedlens-slideUp 0.3s ease;
+}
+
+@keyframes feedlens-slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.feedlens-modal-header {
+  padding: 24px;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.feedlens-modal-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #0f0f0f;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.feedlens-modal-close {
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #606060;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s ease;
+}
+
+.feedlens-modal-close:hover {
+  background: #f0f0f0;
+}
+
+.feedlens-modal-body {
+  padding: 24px;
+}
+
+.feedlens-info {
+  margin: 0 0 24px 0;
+  padding: 12px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #606060;
+  line-height: 1.5;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.feedlens-info strong {
+  color: #0f0f0f;
+}
+
+/* Form Styles */
+.feedlens-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.feedlens-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.feedlens-form-group label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #0f0f0f;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.feedlens-form-group .required {
+  color: #ff0000;
+}
+
+.feedlens-form-group input,
+.feedlens-form-group select,
+.feedlens-form-group textarea {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  transition: border-color 0.2s ease;
+}
+
+.feedlens-form-group input:focus,
+.feedlens-form-group select:focus,
+.feedlens-form-group textarea:focus {
+  outline: none;
+  border-color: #065fd4;
+}
+
+.feedlens-form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.feedlens-form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.feedlens-btn-primary,
+.feedlens-btn-secondary {
+  padding: 10px 24px;
+  border: none;
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.feedlens-btn-primary {
+  background: #065fd4;
+  color: white;
+}
+
+.feedlens-btn-primary:hover {
+  background: #0556c4;
+}
+
+.feedlens-btn-primary:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.feedlens-btn-secondary {
+  background: #f0f0f0;
+  color: #0f0f0f;
+}
+
+.feedlens-btn-secondary:hover {
+  background: #e0e0e0;
+}
+
+/* Success Screen */
+.feedlens-success {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.feedlens-success h2 {
+  margin: 0 0 16px 0;
+  font-size: 24px;
+  color: #0f0f0f;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.feedlens-success p {
+  margin: 0 0 24px 0;
+  color: #606060;
+  font-size: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.feedlens-success-link {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.feedlens-success-link input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: monospace;
+  background: #f9f9f9;
+}
+
+.feedlens-success-link button {
+  padding: 10px 20px;
+  background: #f0f0f0;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.feedlens-success-link button:hover {
+  background: #e0e0e0;
+}
+
+.feedlens-success-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.feedlens-success-actions a {
+  text-decoration: none;
+}
+
+
+/* ── View Banner ─────────────────────────────── */
+.feedlens-view-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9998;
+  background: #065fd4;
+  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.feedlens-view-banner-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.feedlens-view-banner-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-width: 0;
+}
+
+.feedlens-view-banner-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.feedlens-view-banner-info > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.feedlens-view-banner-info strong {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.feedlens-view-banner-meta {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.feedlens-view-banner-desc {
+  font-size: 12px;
+  opacity: 0.75;
+  font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 500px;
+}
+
+.feedlens-view-banner-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.feedlens-btn-sm {
+  padding: 6px 14px !important;
+  font-size: 13px !important;
+}
+
+.feedlens-btn-exit {
+  padding: 7px 16px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.feedlens-btn-exit:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/* ── Feed Overlay ────────────────────────────── */
+.feedlens-feed-overlay {
+  width: 100%;
+  padding: 100px 24px 40px;
+  box-sizing: border-box;
+  background: #f9f9f9;
+  min-height: 100vh;
+}
+
+.feedlens-feed-grid {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* ── Video Card ──────────────────────────────── */
+.feedlens-video-card {
+  display: block;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.feedlens-video-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.feedlens-video-thumb-wrap {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  overflow: hidden;
+}
+
+.feedlens-video-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.2s ease;
+}
+
+.feedlens-video-card:hover .feedlens-video-thumb {
+  opacity: 0.9;
+}
+
+.feedlens-video-position {
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.feedlens-video-meta {
+  padding: 10px 12px 12px;
+}
+
+.feedlens-video-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f0f0f;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 4px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.feedlens-video-channel {
+  font-size: 12px;
+  color: #606060;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Quality badges ───────────────────────────── */
+.fl-badge-ok, .fl-badge-warn {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-right: 4px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+.fl-badge-ok   { background: #e6f4ea; color: #1e7e34; }
+.fl-badge-warn { background: #fff3cd; color: #856404; }
+
+/* ── Similar snapshots (success screen) ──────── */
+.feedlens-similar {
+  margin: 14px 0 8px;
+}
+.feedlens-similar-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #5a5a5a;
+  margin: 0 0 8px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+.feedlens-similar-list {
+  display: flex;
+  gap: 8px;
+}
+.feedlens-similar-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-decoration: none;
+  color: inherit;
+  background: #f7f8fa;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  padding: 6px;
+  transition: border-color 0.15s;
+  min-width: 0;
+}
+.feedlens-similar-item:hover {
+  border-color: #1a73e8;
+}
+.feedlens-similar-thumbs {
+  display: flex;
+  gap: 2px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.feedlens-similar-thumbs img {
+  width: 33.33%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  display: block;
+}
+.feedlens-similar-name {
+  font-size: 11px;
+  font-weight: 500;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ── Explore CTA button ───────────────────────── */
+.feedlens-btn-explore {
+  display: block;
+  text-align: center;
+  background: linear-gradient(135deg, #1a73e8, #0d5bcc);
+  color: white !important;
+  text-decoration: none;
+  padding: 11px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  margin: 12px 0 4px;
+  transition: opacity 0.15s, transform 0.1s;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+.feedlens-btn-explore:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* ── Removal token box ────────────────────────── */
+.feedlens-token-box {
+  background: #fffbe6;
+  border: 1.5px solid #f0c040;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 12px 0;
+}
+.feedlens-token-label {
+  font-size: 13px;
+  margin: 0 0 8px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+.feedlens-token-hint {
+  font-size: 11px;
+  color: #7a6000;
+  margin: 6px 0 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}

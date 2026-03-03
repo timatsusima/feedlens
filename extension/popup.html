@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FeedLens</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup">
+    <header class="popup-header">
+      <span class="popup-logo">📸</span>
+      <span class="popup-title">FeedLens</span>
+    </header>
+
+    <!-- Status message (shown when not on YouTube) -->
+    <div id="not-youtube" class="popup-notice" style="display:none"
+         data-i18n="popup_not_youtube">
+      Open <strong>youtube.com</strong> to use FeedLens.
+    </div>
+
+    <!-- Main content (shown on YouTube) -->
+    <div id="main-content">
+
+      <!-- Publish section -->
+      <section class="popup-section">
+        <button id="publish-btn" class="btn btn-publish"
+                data-i18n="popup_btn_publish">
+          📸 Publish My Snapshot
+        </button>
+        <p class="popup-hint" data-i18n="popup_hint_publish">
+          Captures top 50 videos from your homepage feed
+        </p>
+      </section>
+
+      <div class="popup-divider"></div>
+
+      <!-- View section -->
+      <section class="popup-section" id="view-section">
+        <h3 class="popup-section-title" data-i18n="popup_section_view">
+          👁 View Someone's Snapshot
+        </h3>
+        <form id="view-form">
+          <input
+            type="text"
+            id="snapshot-input"
+            class="popup-input"
+            placeholder="Paste snapshot ID or URL…"
+            data-i18n-placeholder="popup_input_placeholder"
+            autocomplete="off"
+            spellcheck="false"
+          >
+          <button type="submit" class="btn btn-view"
+                  data-i18n="popup_btn_load">
+            Load Snapshot
+          </button>
+        </form>
+        <p id="view-error" class="popup-error" style="display:none"></p>
+
+        <!-- Shown when actively viewing a snapshot -->
+        <div id="viewing-bar" style="display:none">
+          <span id="viewing-label" class="viewing-label"></span>
+          <button id="exit-view-btn" class="btn btn-exit"
+                  data-i18n="popup_btn_exit">
+            ✕ Exit View
+          </button>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
