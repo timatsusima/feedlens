@@ -67,12 +67,13 @@ export default async function DiscoverPage({ searchParams }: PageProps) {
   const hasFilters = fq || filterCity || filterAge || fCountry;
 
   // Build Prisma WHERE
-  type SnapWhere = Parameters<typeof prisma.snapshot.findMany>[0]['where'];
-  const baseWhere: SnapWhere = { deletedAt: null };
-  if (fq)          baseWhere.nickname  = { contains: fq,       mode: 'insensitive' };
-  if (filterCity)  baseWhere.city      = { contains: filterCity, mode: 'insensitive' };
-  if (filterAge)   baseWhere.ageBucket = filterAge;
-  if (fCountry)    baseWhere.locale    = { endsWith: `-${fCountry}`, mode: 'insensitive' };
+  const baseWhere = {
+    deletedAt: null as null,
+    ...(fq         ? { nickname:  { contains: fq,            mode: 'insensitive' as const } } : {}),
+    ...(filterCity ? { city:      { contains: filterCity,    mode: 'insensitive' as const } } : {}),
+    ...(filterAge  ? { ageBucket: filterAge } : {}),
+    ...(fCountry   ? { locale:    { endsWith: `-${fCountry}`, mode: 'insensitive' as const } } : {}),
+  };
 
   // Welcome banner snapshots
   type SnapRow = Awaited<ReturnType<typeof prisma.snapshot.findMany<{ select: typeof CARD_SELECT }>>>[number];
