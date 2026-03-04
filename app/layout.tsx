@@ -10,6 +10,13 @@ export const metadata: Metadata = {
   title: 'FeedLens — YouTube Recommendation Snapshots',
   description: 'Publish your YouTube feed and explore what others are watching. Anonymous, open-source, privacy-first.',
   metadataBase: new URL(BASE_URL),
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/icon.png', type: 'image/png', sizes: '32x32' },
+    ],
+    apple: '/apple-touch-icon.png',
+  },
   openGraph: {
     siteName: 'FeedLens',
     type: 'website',
