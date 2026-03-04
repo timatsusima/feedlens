@@ -1,12 +1,18 @@
+import { Suspense } from 'react';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
 import { getLocale } from '@/lib/locale';
 import { getDictionary } from '@/lib/dictionaries';
+import { localeToFlag, localeToCountryCode } from '@/lib/flag';
 import UnlockGate from './UnlockGate';
+import DiscoverFilters, { type FilterValues } from './DiscoverFilters';
 
 interface PageProps {
-  searchParams: Promise<{ welcome?: string; city?: string; age?: string }>;
+  searchParams: Promise<{
+    welcome?: string; city?: string; age?: string;
+    q?: string; country?: string;
+  }>;
 }
 
 export async function generateMetadata() {
@@ -25,6 +31,8 @@ const CARD_SELECT = {
   _count: { select: { videos: true } },
 };
 
+const AGE_BUCKETS = ['13-17', '18-24', '25-34', '35-44', '45-54', '55-64', '65+'];
+
 export default async function DiscoverPage({ searchParams }: PageProps) {
   const locale = await getLocale();
   const d = getDictionary(locale);
@@ -37,15 +45,37 @@ export default async function DiscoverPage({ searchParams }: PageProps) {
     return <UnlockGate d={d} />;
   }
 
-  // Welcome mode params (from unlock-and-redirect route)
   const params = await searchParams;
   const isWelcome   = params.welcome === '1';
-  const welcomeCity = typeof params.city === 'string' ? params.city : undefined;
-  const welcomeAge  = typeof params.age  === 'string' ? params.age  : undefined;
+  const welcomeCity = typeof params.city    === 'string' ? params.city    : undefined;
+  const welcomeAge  = typeof params.age     === 'string' ? params.age     : undefined;
 
-  // Fetch "similar" snapshots for welcome banner
+  // Filter params
+  const fq       = typeof params.q       === 'string' ? params.q.trim()              : '';
+  const fCity    = typeof params.city    === 'string' && !isWelcome ? params.city.trim()   : '';
+  const fAge     = typeof params.age     === 'string' && !isWelcome ? params.age.trim()    : '';
+  const fCountry = typeof params.country === 'string' ? params.country.trim().toUpperCase() : '';
+
+  // When we're in welcome mode, city/age params are for the banner, not for filters
+  const filterCity    = isWelcome ? '' : fCity;
+  const filterAge     = isWelcome ? '' : fAge;
+
+  const filterValues: FilterValues = {
+    q: fq, city: filterCity, age: filterAge, country: fCountry,
+  };
+
+  const hasFilters = fq || filterCity || filterAge || fCountry;
+
+  // Build Prisma WHERE
+  type SnapWhere = Parameters<typeof prisma.snapshot.findMany>[0]['where'];
+  const baseWhere: SnapWhere = { deletedAt: null };
+  if (fq)          baseWhere.nickname  = { contains: fq,       mode: 'insensitive' };
+  if (filterCity)  baseWhere.city      = { contains: filterCity, mode: 'insensitive' };
+  if (filterAge)   baseWhere.ageBucket = filterAge;
+  if (fCountry)    baseWhere.locale    = { endsWith: `-${fCountry}`, mode: 'insensitive' };
+
+  // Welcome banner snapshots
   type SnapRow = Awaited<ReturnType<typeof prisma.snapshot.findMany<{ select: typeof CARD_SELECT }>>>[number];
-
   let welcomeSnaps: SnapRow[] = [];
   if (isWelcome) {
     if (welcomeCity || welcomeAge) {
@@ -60,7 +90,6 @@ export default async function DiscoverPage({ searchParams }: PageProps) {
         select: CARD_SELECT,
       });
     }
-    // Fallback: just grab the 3 latest if nothing matched
     if (welcomeSnaps.length === 0) {
       welcomeSnaps = await prisma.snapshot.findMany({
         where: { deletedAt: null },
@@ -73,9 +102,9 @@ export default async function DiscoverPage({ searchParams }: PageProps) {
 
   // Main feed
   const snapshots = await prisma.snapshot.findMany({
-    where: { deletedAt: null },
+    where: baseWhere,
     orderBy: { createdAt: 'desc' },
-    take: 24,
+    take: 48,
     select: CARD_SELECT,
   });
 
@@ -84,46 +113,49 @@ export default async function DiscoverPage({ searchParams }: PageProps) {
       month: 'short', day: 'numeric', year: 'numeric',
     }).format(date);
 
-  const SnapshotCard = ({ snapshot }: { snapshot: SnapRow }) => (
-    <Link key={snapshot.id} href={`/snapshot/${snapshot.id}`} className="discover-card">
-      <div className="discover-card-thumbs">
-        {snapshot.videos.map(v => (
-          <img
-            key={v.videoId}
-            src={`https://img.youtube.com/vi/${v.videoId}/mqdefault.jpg`}
-            alt=""
-            className="discover-card-thumb"
-            loading="lazy"
-          />
-        ))}
-        {snapshot._count.videos > 4 && (
-          <div className="discover-card-more">+{snapshot._count.videos - 4}</div>
-        )}
-      </div>
-      <div className="discover-card-info">
-        <div className="discover-card-meta">
-          <span className="discover-card-name">{snapshot.nickname}</span>
-          {snapshot.city      && <span className="discover-card-tag">📍 {snapshot.city}</span>}
-          {snapshot.ageBucket && <span className="discover-card-tag">🎂 {snapshot.ageBucket}</span>}
-          {snapshot.locale    && <span className="discover-card-tag">🌐 {snapshot.locale}</span>}
+  const SnapshotCard = ({ snapshot }: { snapshot: SnapRow }) => {
+    const flag = localeToFlag(snapshot.locale);
+    return (
+      <Link href={`/snapshot/${snapshot.id}`} className="discover-card">
+        <div className="discover-card-thumbs">
+          {snapshot.videos.map(v => (
+            <img
+              key={v.videoId}
+              src={`https://img.youtube.com/vi/${v.videoId}/mqdefault.jpg`}
+              alt=""
+              className="discover-card-thumb"
+              loading="lazy"
+            />
+          ))}
+          {snapshot._count.videos > 4 && (
+            <div className="discover-card-more">+{snapshot._count.videos - 4}</div>
+          )}
         </div>
-        {snapshot.description && (
-          <p className="discover-card-desc">{snapshot.description}</p>
-        )}
-        <div className="discover-card-footer">
-          <span>
-            {snapshot._count.videos} {dis.videosLabel}
-            {snapshot.isPartial && (
-              <span style={{ marginLeft: 4, color: '#b45309', fontSize: '0.72rem', fontWeight: 700 }}>
-                {dis.partial}
-              </span>
-            )}
-          </span>
-          <span>{formatDate(snapshot.createdAt)}</span>
+        <div className="discover-card-info">
+          <div className="discover-card-meta">
+            {flag && <span className="discover-card-flag">{flag}</span>}
+            <span className="discover-card-name">{snapshot.nickname}</span>
+            {snapshot.city      && <span className="discover-card-tag">📍 {snapshot.city}</span>}
+            {snapshot.ageBucket && <span className="discover-card-tag">🎂 {snapshot.ageBucket}</span>}
+          </div>
+          {snapshot.description && (
+            <p className="discover-card-desc">{snapshot.description}</p>
+          )}
+          <div className="discover-card-footer">
+            <span>
+              {snapshot._count.videos} {dis.videosLabel}
+              {snapshot.isPartial && (
+                <span style={{ marginLeft: 4, color: '#ca8a04', fontSize: '0.72rem', fontWeight: 700 }}>
+                  {dis.partial}
+                </span>
+              )}
+            </span>
+            <span>{formatDate(snapshot.createdAt)}</span>
+          </div>
         </div>
-      </div>
-    </Link>
-  );
+      </Link>
+    );
+  };
 
   return (
     <main className="container">
@@ -136,7 +168,6 @@ export default async function DiscoverPage({ searchParams }: PageProps) {
               {welcomeSnaps.length > 0 ? dis.welcomeText : dis.welcomeNoSimilar}
             </p>
           </div>
-
           {welcomeSnaps.length > 0 && (
             <>
               <h3 className="welcome-section-title">
@@ -156,7 +187,7 @@ export default async function DiscoverPage({ searchParams }: PageProps) {
         </div>
       )}
 
-      {/* ── Main header ────────────────────────────────────────────────── */}
+      {/* ── Header ─────────────────────────────────────────────────────── */}
       <div className="discover-header">
         <div>
           <h1 className="discover-title">{dis.title}</h1>
@@ -164,6 +195,29 @@ export default async function DiscoverPage({ searchParams }: PageProps) {
         </div>
         <Link href="/" className="button button-sm">{dis.publishBtn}</Link>
       </div>
+
+      {/* ── Filters ────────────────────────────────────────────────────── */}
+      <Suspense>
+        <DiscoverFilters
+          values={filterValues}
+          ageBuckets={AGE_BUCKETS}
+          placeholder={{ q: dis.filterQPh, city: dis.filterCityPh, country: dis.filterCountryPh }}
+          labels={{
+            q:       dis.filterQ,
+            city:    dis.filterCity,
+            country: dis.filterCountry,
+            age:     dis.filterAge,
+            clear:   dis.filterClear,
+          }}
+        />
+      </Suspense>
+
+      {/* ── Results count (when filtering) ─────────────────────────────── */}
+      {hasFilters && (
+        <p className="discover-results-count">
+          {snapshots.length} {dis.filterResults}
+        </p>
+      )}
 
       {/* ── Main feed ──────────────────────────────────────────────────── */}
       {snapshots.length === 0 ? (

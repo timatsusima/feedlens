@@ -64,6 +64,17 @@ const en = {
     videosLabel: 'videos',
     partial:     'partial',
 
+    // Filters
+    filterQ:           'Name',
+    filterQPh:         'Search by name…',
+    filterCity:        'City',
+    filterCityPh:      'e.g. Moscow',
+    filterCountry:     'Country',
+    filterCountryPh:   'RU / US / KZ…',
+    filterAge:         'Age',
+    filterClear:       'Clear filters',
+    filterResults:     'results',
+
     // Welcome banner (shown after publishing via extension)
     welcomeTitle:       '🎉 Your snapshot is live!',
     welcomeText:        'Discover is unlocked. Here\'s what people like you are watching:',
@@ -194,6 +205,17 @@ const ru: typeof en = {
     empty:       'Снапшотов пока нет. Будь первым!',
     videosLabel: 'видео',
     partial:     'частичный',
+
+    // Filters
+    filterQ:           'Имя',
+    filterQPh:         'Поиск по имени…',
+    filterCity:        'Город',
+    filterCityPh:      'напр. Алматы',
+    filterCountry:     'Страна',
+    filterCountryPh:   'RU / KZ / US…',
+    filterAge:         'Возраст',
+    filterClear:       'Сбросить',
+    filterResults:     'результатов',
 
     welcomeTitle:        '🎉 Твой снапшот опубликован!',
     welcomeText:         'Discover разблокирован. Смотри, что смотрят похожие на тебя:',

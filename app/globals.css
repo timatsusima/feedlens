@@ -879,6 +879,103 @@ h1 {
 }
 
 /* ═══════════════════════════════════════════
+   DISCOVER FILTERS
+═══════════════════════════════════════════ */
+.discover-filters {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  transition: opacity 0.2s;
+}
+
+.discover-filters--loading { opacity: 0.5; pointer-events: none; }
+
+.discover-filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.discover-filter-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-3);
+}
+
+.discover-filter-input {
+  height: 36px;
+  padding: 0 12px;
+  background: var(--bg-1);
+  border: 1px solid var(--border-2);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.88rem;
+  width: 180px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.discover-filter-input:focus { border-color: var(--accent); }
+.discover-filter-input::placeholder { color: var(--text-3); }
+.discover-filter-input--sm { width: 90px; }
+
+.discover-filter-select {
+  height: 36px;
+  padding: 0 10px;
+  background: var(--bg-1);
+  border: 1px solid var(--border-2);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.88rem;
+  width: 120px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.15s;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%235f6368' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  padding-right: 26px;
+}
+.discover-filter-select:focus { border-color: var(--accent); }
+.discover-filter-select option { background: var(--bg-2); }
+
+.discover-filter-clear {
+  height: 36px;
+  padding: 0 14px;
+  background: none;
+  border: 1px solid var(--border-2);
+  border-radius: 8px;
+  color: var(--text-3);
+  font-family: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+  align-self: flex-end;
+  margin-bottom: 0;
+}
+.discover-filter-clear:hover { color: var(--text); border-color: var(--text-3); }
+
+.discover-results-count {
+  font-size: 0.82rem;
+  color: var(--text-3);
+  margin-bottom: 14px;
+}
+
+/* Flag on discover card */
+.discover-card-flag {
+  font-size: 1rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════
    GATE (unlock discover)
 ═══════════════════════════════════════════ */
 .gate-wrapper {
