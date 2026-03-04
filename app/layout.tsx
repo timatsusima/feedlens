@@ -33,7 +33,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang={locale}>
       <body>
         <nav className="site-nav">
-          <a href="/" className="site-nav-logo">📸 FeedLens</a>
+          <a href="/" className="site-nav-logo">Feed<span>Lens</span></a>
           <a href="/discover" className="site-nav-link">{d.nav.discover}</a>
           <div className="site-nav-right">
             <LanguageSwitcher current={locale} label={d.nav.langSwitch} />
