@@ -4,6 +4,8 @@ import { Analytics } from '@vercel/analytics/react';
 import { getLocale } from '@/lib/locale';
 import { getDictionary } from '@/lib/dictionaries';
 import LanguageSwitcher from './components/LanguageSwitcher';
+import { ThemeProvider } from './components/ThemeProvider';
+import ThemeSwitcher from './components/ThemeSwitcher';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? 'https://feedlens.vercel.app';
 
@@ -38,28 +40,31 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const d = getDictionary(locale);
 
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <body>
-        <nav className="site-nav">
-          <a href="/" className="site-nav-logo">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style={{display:'inline-block',verticalAlign:'middle',marginRight:7,marginBottom:2}}>
-              <rect width="20" height="20" rx="5" fill="#ff0000"/>
-              <circle cx="10" cy="10" r="4" fill="none" stroke="white" strokeWidth="1.5"/>
-              <circle cx="10" cy="10" r="1.5" fill="white"/>
-            </svg>
-            Feed<span>Lens</span>
-          </a>
-          <a href="/discover" className="site-nav-link">{d.nav.discover}</a>
-          <div className="site-nav-right">
-            <LanguageSwitcher current={locale} label={d.nav.langSwitch} />
-          </div>
-        </nav>
+        <ThemeProvider>
+          <nav className="site-nav">
+            <a href="/" className="site-nav-logo">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style={{display:'inline-block',verticalAlign:'middle',marginRight:7,marginBottom:2}}>
+                <rect width="20" height="20" rx="5" fill="#ff0000"/>
+                <circle cx="10" cy="10" r="4" fill="none" stroke="white" strokeWidth="1.5"/>
+                <circle cx="10" cy="10" r="1.5" fill="white"/>
+              </svg>
+              Feed<span>Lens</span>
+            </a>
+            <a href="/discover" className="site-nav-link">{d.nav.discover}</a>
+            <div className="site-nav-right">
+              <ThemeSwitcher labels={{ light: d.nav.themeLight, dark: d.nav.themeDark, system: d.nav.themeSystem }} />
+              <LanguageSwitcher current={locale} label={d.nav.langSwitch} />
+            </div>
+          </nav>
         {children}
         <footer className="site-footer">
           <span>© 2026 FeedLens</span>
           <a href="/privacy">{d.nav.privacy}</a>
         </footer>
         <Analytics />
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -10,6 +10,9 @@ const en = {
     admin:     'Admin',
     langSwitch: 'RU',
     privacy:   'Privacy Policy',
+    themeLight: 'Light',
+    themeDark:  'Dark',
+    themeSystem: 'System',
   },
 
   home: {
@@ -70,7 +73,7 @@ const en = {
     filterCity:        'City',
     filterCityPh:      'e.g. Moscow',
     filterCountry:     'Country',
-    filterCountryPh:   'RU / US / KZ…',
+    filterCountryPh:   'US, JP, DE, RU…',
     filterAge:         'Age',
     filterClear:       'Clear filters',
     filterResults:     'results',
@@ -156,6 +159,9 @@ const ru: typeof en = {
     admin:     'Админ',
     langSwitch: 'EN',
     privacy:   'Конфиденциальность',
+    themeLight: 'Светлая',
+    themeDark:  'Тёмная',
+    themeSystem: 'По умолчанию',
   },
 
   home: {
@@ -212,7 +218,7 @@ const ru: typeof en = {
     filterCity:        'Город',
     filterCityPh:      'напр. Алматы',
     filterCountry:     'Страна',
-    filterCountryPh:   'RU / KZ / US…',
+    filterCountryPh:   'US, JP, DE, KZ…',
     filterAge:         'Возраст',
     filterClear:       'Сбросить',
     filterResults:     'результатов',
