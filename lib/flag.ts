@@ -95,6 +95,30 @@ const TZ_COUNTRY: Record<string, string> = {
 };
 
 /**
+ * City name (normalized) → country code.
+ * Overrides timezone when user explicitly specifies city (avoids Omsk→KZ, Almaty→RU).
+ */
+const CITY_COUNTRY: Record<string, string> = {
+  // Russia
+  'омск': 'RU', 'omsk': 'RU',
+  'москва': 'RU', 'moscow': 'RU', 'спб': 'RU', 'санкт-петербург': 'RU',
+  'екатеринбург': 'RU', 'yekaterinburg': 'RU', 'новосибирск': 'RU',
+  'нижний новгород': 'RU', 'казань': 'RU', 'самара': 'RU',
+  'ростов-на-дону': 'RU', 'красноярск': 'RU', 'владивосток': 'RU',
+  // Kazakhstan
+  'алматы': 'KZ', 'almaty': 'KZ', 'астана': 'KZ', 'astana': 'KZ',
+  'нур-султан': 'KZ', 'шымкент': 'KZ', 'караганда': 'KZ',
+  // Ukraine, Belarus, etc.
+  'киев': 'UA', 'kyiv': 'UA', 'kiev': 'UA', 'минск': 'BY', 'minsk': 'BY',
+};
+
+export function cityToCountryCode(city?: string | null): string {
+  if (!city) return '';
+  const k = city.trim().toLowerCase().replace(/\s+/g, ' ');
+  return CITY_COUNTRY[k] ?? '';
+}
+
+/**
  * Derives a 2-letter country code from an IANA timezone string.
  * "Asia/Almaty" → "KZ"
  */
@@ -128,9 +152,15 @@ export function countryCodeToFlag(code?: string | null): string {
 
 /**
  * Returns the best flag emoji for a snapshot.
- * Prefers timezone-derived country (accurate) over locale-derived (language ≠ location).
+ * Prefers: 1) city (explicit), 2) timezone, 3) locale.
  */
-export function snapshotFlag(timezone?: string | null, locale?: string | null): string {
+export function snapshotFlag(
+  timezone?: string | null,
+  locale?: string | null,
+  city?: string | null,
+): string {
+  const cityCode = cityToCountryCode(city);
+  if (cityCode) return countryCodeToFlag(cityCode);
   const tzCode = timezoneToCountryCode(timezone);
   if (tzCode) return countryCodeToFlag(tzCode);
   return countryCodeToFlag(localeToCountryCode(locale));

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { prisma } from '@/lib/prisma';
 import { generateRemovalToken } from '@/lib/token';
-import { timezoneToCountryCode } from '@/lib/flag';
+import { timezoneToCountryCode, cityToCountryCode } from '@/lib/flag';
 
 // ─── Types ────────────────────────────────────────────────────────────────
 
@@ -139,7 +139,7 @@ export async function POST(request: NextRequest) {
         collectedAt:   data.collectedAt ? new Date(data.collectedAt) : new Date(),
         timezone:      data.timezone ?? null,
         locale:        data.locale ?? null,
-        country:       timezoneToCountryCode(data.timezone) || null,
+        country:       cityToCountryCode(data.city) || timezoneToCountryCode(data.timezone) || null,
 
         targetCount, collectedCount, uniqueVideoCount, duplicateCount, isPartial,
         collectorVersion: data.collectorVersion ?? null,

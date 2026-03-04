@@ -102,7 +102,7 @@ export default async function SnapshotPage({ params }: PageProps) {
             {snapshot.locale && (
               <span>
                 {(() => {
-                  const flag = snapshotFlag(snapshot.timezone, snapshot.locale);
+                  const flag = snapshotFlag(snapshot.timezone, snapshot.locale, snapshot.city);
                   return flag ? `${flag} ${snapshot.locale}` : `🌐 ${snapshot.locale}`;
                 })()}
               </span>

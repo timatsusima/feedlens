@@ -116,7 +116,7 @@ export default async function DiscoverPage({ searchParams }: PageProps) {
     }).format(date);
 
   const SnapshotCard = ({ snapshot }: { snapshot: SnapRow }) => {
-    const flag = snapshotFlag(snapshot.timezone, snapshot.locale);
+    const flag = snapshotFlag(snapshot.timezone, snapshot.locale, snapshot.city);
     return (
       <Link href={`/snapshot/${snapshot.id}`} className="discover-card">
         <div className="discover-card-thumbs">
