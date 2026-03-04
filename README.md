@@ -216,7 +216,7 @@ Built with modern web technologies and a privacy-first approach.
 
 - **Issues**: [GitHub Issues](https://github.com/yourusername/feedlens/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/yourusername/feedlens/discussions)
-- **Email**: privacy@feedlens.com
+- **Email**: akira.kumo@proton.me
 
 ---
 

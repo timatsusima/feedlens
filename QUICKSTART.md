@@ -226,7 +226,7 @@ After making changes:
 - 📖 Read [FAQ.md](./FAQ.md)
 - 🐛 Report issues on GitHub
 - 💬 Ask in GitHub Discussions
-- 📧 Email: support@feedlens.com
+- 📧 Email: akira.kumo@proton.me
 
 ## ⏱ Time Check
 

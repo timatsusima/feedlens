@@ -47,7 +47,7 @@ Yes. We only collect public information that's already visible on YouTube. Your 
 
 ### Can I delete my snapshot?
 
-Currently, snapshots are permanent. If you need a snapshot removed, contact us at privacy@feedlens.com with the snapshot ID.
+Currently, snapshots are permanent. If you need a snapshot removed, contact us at akira.kumo@proton.me with the snapshot ID.
 
 (Note: Delete functionality is planned for Phase 1)
 
@@ -280,7 +280,7 @@ Sponsorship options coming soon. For now, contributions are the best way to help
 1. Read the documentation (start with [README.md](./README.md))
 2. Search GitHub Issues
 3. Ask in GitHub Discussions
-4. Email: support@feedlens.com
+4. Email: akira.kumo@proton.me
 
 ### How do I report a bug?
 
@@ -343,7 +343,7 @@ Accessed: [Date]
 
 ### Can we collaborate on research?
 
-Yes! Email research@feedlens.com with your proposal.
+Yes! Email akira.kumo@proton.me with your proposal.
 
 ## Business & Legal
 
@@ -411,7 +411,7 @@ But for now, it's purely community-driven.
 
 ## Still Have Questions?
 
-- 📧 Email: support@feedlens.com
+- 📧 Email: akira.kumo@proton.me
 - 💬 GitHub Discussions: [Link]
 - 🐛 GitHub Issues: [Link]
 - 🌐 Website: feedlens.com

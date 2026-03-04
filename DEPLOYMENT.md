@@ -247,7 +247,7 @@ Snapshots are stored indefinitely unless you request deletion.
 
 ## Your Rights
 
-You can request deletion by contacting: privacy@feedlens.com
+You can request deletion by contacting: akira.kumo@proton.me
 
 ## Changes
 
@@ -255,7 +255,7 @@ We'll update this policy as needed. Check back periodically.
 
 ## Contact
 
-Questions? Email privacy@feedlens.com
+Questions? Email akira.kumo@proton.me
 ```
 
 ## Domain Configuration
