@@ -10,9 +10,9 @@ const en = {
     admin:     'Admin',
     langSwitch: 'RU',
     privacy:   'Privacy Policy',
-    themeLight: 'Light',
-    themeDark:  'Dark',
-    themeSystem: 'System',
+    themeLight: 'Light theme',
+    themeDark:  'Dark theme',
+    themeSystem: 'Default',
   },
 
   home: {
@@ -159,9 +159,9 @@ const ru: typeof en = {
     admin:     'Админ',
     langSwitch: 'EN',
     privacy:   'Конфиденциальность',
-    themeLight: 'Светлая',
-    themeDark:  'Тёмная',
-    themeSystem: 'По умолчанию',
+    themeLight: 'Светлая тема',
+    themeDark:  'Тёмная тема',
+    themeSystem: 'Вариант по умолчанию',
   },
 
   home: {
