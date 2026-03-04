@@ -119,7 +119,7 @@ export default async function Home() {
             {h.ctaDiscover}
           </Link>
           <a
-            href="https://github.com/yourusername/feedlens"
+            href="https://github.com/timatsusima/feedlens"
             target="_blank"
             rel="noopener noreferrer"
             className="button button-outline"
