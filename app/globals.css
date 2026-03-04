@@ -1397,6 +1397,192 @@ h1 {
 }
 
 /* ═══════════════════════════════════════════
+   HERO — BUBBLE
+═══════════════════════════════════════════ */
+
+.hero-bubble {
+  background: linear-gradient(160deg, #0f0f0f 0%, #1a1a2e 50%, #16213e 100%);
+  color: #fff;
+  padding: 80px 24px 72px;
+  text-align: center;
+}
+
+.hero-bubble-title {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  font-weight: 900;
+  line-height: 1.15;
+  margin-bottom: 20px;
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-bubble-tagline {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  color: #a0aec0;
+  line-height: 1.65;
+  max-width: 600px;
+  margin: 0 auto 36px;
+}
+
+.hero-bubble-tagline span {
+  color: #718096;
+}
+
+.hero-bubble-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.button-hero {
+  background: #e53e3e;
+  color: #fff !important;
+  font-size: 1.05rem;
+  padding: 14px 32px;
+  border-radius: 10px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.15s, transform 0.1s;
+  display: inline-block;
+}
+
+.button-hero:hover {
+  background: #c53030;
+  transform: translateY(-1px);
+}
+
+/* ═══════════════════════════════════════════
+   BUBBLE INSIGHT SECTION
+═══════════════════════════════════════════ */
+
+.bubble-section {
+  padding: 72px 24px 60px;
+  text-align: center;
+}
+
+.bubble-title {
+  font-size: clamp(1.3rem, 3vw, 1.9rem);
+  font-weight: 800;
+  margin-bottom: 16px;
+  color: #0f0f0f;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.bubble-text {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.7;
+  max-width: 640px;
+  margin: 0 auto 40px;
+}
+
+.bubble-compare {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  max-width: 720px;
+  margin: 0 auto 36px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+
+.bubble-side {
+  flex: 1;
+  padding: 28px 24px;
+  text-align: left;
+}
+
+.bubble-inside {
+  background: #f7f7f7;
+  border-right: 2px solid #e2e2e2;
+}
+
+.bubble-outside {
+  background: #f0fdf4;
+}
+
+.bubble-side-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 14px;
+}
+
+.bubble-inside .bubble-side-label  { color: #999; }
+.bubble-outside .bubble-side-label { color: #16a34a; }
+
+.bubble-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bubble-list li {
+  font-size: 0.93rem;
+  color: #374151;
+  line-height: 1.4;
+}
+
+.bubble-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  background: #fff;
+  font-size: 1.3rem;
+  color: #ccc;
+  flex-shrink: 0;
+}
+
+.bubble-cta-btn {
+  display: inline-block;
+  background: #0f0f0f;
+  color: #fff !important;
+  text-decoration: none;
+  padding: 13px 28px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.bubble-cta-btn:hover {
+  background: #333;
+  transform: translateY(-1px);
+}
+
+/* ═══════════════════════════════════════════
+   HOW IT WORKS SECTION
+═══════════════════════════════════════════ */
+
+.how-section {
+  background: #f9fafb;
+  padding: 64px 24px;
+  text-align: center;
+}
+
+.how-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.how-subtitle {
+  font-size: 0.97rem;
+  color: #666;
+  max-width: 560px;
+  margin: 0 auto 40px;
+  line-height: 1.65;
+}
+
+/* ═══════════════════════════════════════════
    DISCOVER — WELCOME BANNER
 ═══════════════════════════════════════════ */
 

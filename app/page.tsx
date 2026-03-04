@@ -10,65 +10,104 @@ export default async function Home() {
   const taglineLines = h.tagline.split('\n');
 
   return (
-    <main className="container">
+    <main>
 
-      {/* ── Hero ── */}
-      <section className="hero">
-        <h1>{h.title}</h1>
-        <p className="tagline">
-          {taglineLines[0]}
-          {taglineLines[1] && <><br /><span style={{ color: '#909090' }}>{taglineLines[1]}</span></>}
-        </p>
+      {/* ── Hero ────────────────────────────────────────────────────── */}
+      <section className="hero-bubble">
+        <div className="container">
+          <h1 className="hero-bubble-title">{h.title}</h1>
+          <p className="hero-bubble-tagline">
+            {taglineLines[0]}
+            {taglineLines[1] && <><br /><span>{taglineLines[1]}</span></>}
+          </p>
+          <div className="hero-bubble-actions">
+            <Link href="/discover" className="button button-hero">
+              {h.reciprocityBtn}
+            </Link>
+          </div>
+        </div>
       </section>
 
-      {/* ── Reciprocity block ── */}
-      <section className="reciprocity-section">
-        <h2 className="reciprocity-title">{h.reciprocityTitle}</h2>
-        <p className="reciprocity-text">{h.reciprocityText}</p>
+      {/* ── Bubble insight ──────────────────────────────────────────── */}
+      <section className="bubble-section container">
+        <h2 className="bubble-title">{h.bubbleTitle}</h2>
+        <p className="bubble-text">{h.bubbleText}</p>
 
-        <div className="reciprocity-steps">
-          <div className="reciprocity-step">
-            <div className="reciprocity-step-icon">📸</div>
-            <div className="reciprocity-step-label">{h.reciprocityStep1Label}</div>
-            <p className="reciprocity-step-text">{h.reciprocityStep1Text}</p>
+        <div className="bubble-compare">
+          <div className="bubble-side bubble-inside">
+            <div className="bubble-side-label">{h.bubbleLeftLabel}</div>
+            <ul className="bubble-list">
+              {h.bubbleLeftItems.map((item, i) => (
+                <li key={i}>😔 {item}</li>
+              ))}
+            </ul>
           </div>
-          <div className="reciprocity-arrow">→</div>
-          <div className="reciprocity-step">
-            <div className="reciprocity-step-icon">🔓</div>
-            <div className="reciprocity-step-label">{h.reciprocityStep2Label}</div>
-            <p className="reciprocity-step-text">{h.reciprocityStep2Text}</p>
-          </div>
-          <div className="reciprocity-arrow">→</div>
-          <div className="reciprocity-step">
-            <div className="reciprocity-step-icon">🔍</div>
-            <div className="reciprocity-step-label">{h.reciprocityStep3Label}</div>
-            <p className="reciprocity-step-text">{h.reciprocityStep3Text}</p>
+
+          <div className="bubble-divider">→</div>
+
+          <div className="bubble-side bubble-outside">
+            <div className="bubble-side-label">{h.bubbleRightLabel}</div>
+            <ul className="bubble-list">
+              {h.bubbleRightItems.map((item, i) => (
+                <li key={i}>✨ {item}</li>
+              ))}
+            </ul>
           </div>
         </div>
 
-        <Link href="/discover" className="button reciprocity-btn">
-          {h.reciprocityBtn}
+        <Link href="/discover" className="button bubble-cta-btn">
+          {h.bubbleCta}
         </Link>
       </section>
 
-      {/* ── Features ── */}
-      <div className="features">
-        <div className="feature">
-          <h3>{h.feature1Title}</h3>
-          <p>{h.feature1Text}</p>
-        </div>
-        <div className="feature">
-          <h3>{h.feature2Title}</h3>
-          <p>{h.feature2Text}</p>
-        </div>
-        <div className="feature">
-          <h3>{h.feature3Title}</h3>
-          <p>{h.feature3Text}</p>
-        </div>
-      </div>
+      {/* ── How it works ────────────────────────────────────────────── */}
+      <section className="how-section">
+        <div className="container">
+          <h2 className="how-title">{h.howTitle}</h2>
+          <p className="how-subtitle">{h.reciprocityText}</p>
 
-      {/* ── CTA ── */}
-      <div className="cta">
+          <div className="reciprocity-steps">
+            <div className="reciprocity-step">
+              <div className="reciprocity-step-icon">📸</div>
+              <div className="reciprocity-step-label">{h.reciprocityStep1Label}</div>
+              <p className="reciprocity-step-text">{h.reciprocityStep1Text}</p>
+            </div>
+            <div className="reciprocity-arrow">→</div>
+            <div className="reciprocity-step">
+              <div className="reciprocity-step-icon">🔓</div>
+              <div className="reciprocity-step-label">{h.reciprocityStep2Label}</div>
+              <p className="reciprocity-step-text">{h.reciprocityStep2Text}</p>
+            </div>
+            <div className="reciprocity-arrow">→</div>
+            <div className="reciprocity-step">
+              <div className="reciprocity-step-icon">🔍</div>
+              <div className="reciprocity-step-label">{h.reciprocityStep3Label}</div>
+              <p className="reciprocity-step-text">{h.reciprocityStep3Text}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Features ────────────────────────────────────────────────── */}
+      <section className="container">
+        <div className="features">
+          <div className="feature">
+            <h3>{h.feature1Title}</h3>
+            <p>{h.feature1Text}</p>
+          </div>
+          <div className="feature">
+            <h3>{h.feature2Title}</h3>
+            <p>{h.feature2Text}</p>
+          </div>
+          <div className="feature">
+            <h3>{h.feature3Title}</h3>
+            <p>{h.feature3Text}</p>
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA ─────────────────────────────────────────────────────── */}
+      <section className="cta container">
         <h2>{h.ctaTitle}</h2>
         <ol>
           <li>{h.ctaStep1}</li>
@@ -88,7 +127,7 @@ export default async function Home() {
             {h.ctaGithub}
           </a>
         </div>
-      </div>
+      </section>
 
     </main>
   );
