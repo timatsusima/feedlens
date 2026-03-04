@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { Analytics } from '@vercel/analytics/react';
 import { getLocale } from '@/lib/locale';
 import { getDictionary } from '@/lib/dictionaries';
 import LanguageSwitcher from './components/LanguageSwitcher';
@@ -58,6 +59,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <span>© 2026 FeedLens</span>
           <a href="/privacy">{d.nav.privacy}</a>
         </footer>
+        <Analytics />
       </body>
     </html>
   );
