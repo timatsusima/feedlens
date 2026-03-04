@@ -24,6 +24,7 @@ model Snapshot {
   collectedAt DateTime @default(now())   @map("collected_at")
   timezone    String?  // IANA name ("Europe/Moscow") or offset ("+05:00")
   locale      String?  // BCP-47 tag e.g. "ru-RU"
+  country     String?  // ISO 3166-1 alpha-2, derived from timezone e.g. "KZ"
 
   // Quality flags
   targetCount      Int     @default(50)    @map("target_count")
@@ -45,6 +46,7 @@ model Snapshot {
   @@index([city])
   @@index([ageBucket])
   @@index([city, ageBucket])
+  @@index([country])
   @@map("snapshots")
 }
 

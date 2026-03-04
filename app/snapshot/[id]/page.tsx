@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { prisma } from '@/lib/prisma';
 import { getLocale } from '@/lib/locale';
 import { getDictionary } from '@/lib/dictionaries';
-import { localeToFlag } from '@/lib/flag';
+import { snapshotFlag, timezoneToCountryCode } from '@/lib/flag';
 import RemovalModal from './RemovalModal';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? 'https://feedlens.vercel.app';
@@ -101,9 +101,10 @@ export default async function SnapshotPage({ params }: PageProps) {
             {snapshot.ageBucket && <span>🎂 {snapshot.ageBucket}</span>}
             {snapshot.locale && (
               <span>
-                {localeToFlag(snapshot.locale)
-                  ? `${localeToFlag(snapshot.locale)} ${snapshot.locale}`
-                  : `🌐 ${snapshot.locale}`}
+                {(() => {
+                  const flag = snapshotFlag(snapshot.timezone, snapshot.locale);
+                  return flag ? `${flag} ${snapshot.locale}` : `🌐 ${snapshot.locale}`;
+                })()}
               </span>
             )}
             <span>📅 {fmtDateShort(snapshot.createdAt)}</span>

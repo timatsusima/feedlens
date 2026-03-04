@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
 import { getLocale } from '@/lib/locale';
 import { getDictionary } from '@/lib/dictionaries';
-import { localeToFlag, localeToCountryCode } from '@/lib/flag';
+import { snapshotFlag } from '@/lib/flag';
 import UnlockGate from './UnlockGate';
 import DiscoverFilters, { type FilterValues } from './DiscoverFilters';
 
@@ -26,7 +26,8 @@ export async function generateMetadata() {
 
 const CARD_SELECT = {
   id: true, nickname: true, city: true, ageBucket: true,
-  description: true, createdAt: true, locale: true, isPartial: true,
+  description: true, createdAt: true, locale: true, timezone: true,
+  country: true, isPartial: true,
   videos: { take: 4, orderBy: { position: 'asc' as const }, select: { videoId: true } },
   _count: { select: { videos: true } },
 };
@@ -72,7 +73,7 @@ export default async function DiscoverPage({ searchParams }: PageProps) {
     ...(fq         ? { nickname:  { contains: fq,            mode: 'insensitive' as const } } : {}),
     ...(filterCity ? { city:      { contains: filterCity,    mode: 'insensitive' as const } } : {}),
     ...(filterAge  ? { ageBucket: filterAge } : {}),
-    ...(fCountry   ? { locale:    { endsWith: `-${fCountry}`, mode: 'insensitive' as const } } : {}),
+    ...(fCountry   ? { country: fCountry } : {}),
   };
 
   // Welcome banner snapshots
@@ -115,7 +116,7 @@ export default async function DiscoverPage({ searchParams }: PageProps) {
     }).format(date);
 
   const SnapshotCard = ({ snapshot }: { snapshot: SnapRow }) => {
-    const flag = localeToFlag(snapshot.locale);
+    const flag = snapshotFlag(snapshot.timezone, snapshot.locale);
     return (
       <Link href={`/snapshot/${snapshot.id}`} className="discover-card">
         <div className="discover-card-thumbs">
