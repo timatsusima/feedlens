@@ -13,10 +13,15 @@
   --text:        #e8eaed;
   --text-2:      #9aa0a6;
   --text-3:      #5f6368;
+  /* YouTube red — primary CTA accent */
+  --accent:        #ff0000;
+  --accent-hover:  #cc0000;
+  --accent-subtle: rgba(255,0,0,0.08);
+  /* Blue — links and focus rings only */
   --blue:        #1a73e8;
   --blue-hover:  #1557b0;
   --blue-subtle: rgba(26,115,232,0.12);
-  --red:         #ff4444;
+  --red:         #ff0000;
   --green:       #34a853;
   --yellow:      #fbbc04;
   --radius:      12px;
@@ -126,7 +131,7 @@ a { color: var(--blue); }
 .button {
   display: inline-block;
   padding: 10px 24px;
-  background: var(--blue);
+  background: var(--accent);
   color: #fff !important;
   text-decoration: none;
   border-radius: 8px;
@@ -137,7 +142,7 @@ a { color: var(--blue); }
   cursor: pointer;
   transition: background 0.15s, transform 0.1s;
 }
-.button:hover { background: var(--blue-hover); transform: translateY(-1px); }
+.button:hover { background: var(--accent-hover); transform: translateY(-1px); }
 
 .button-sm {
   padding: 7px 16px;
@@ -186,12 +191,12 @@ a { color: var(--blue); }
 }
 .hero-bubble::before {
   width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(26,115,232,0.12) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255,0,0,0.10) 0%, transparent 70%);
   top: -100px; right: -100px;
 }
 .hero-bubble::after {
   width: 350px; height: 350px;
-  background: radial-gradient(circle, rgba(26,115,232,0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255,0,0,0.06) 0%, transparent 70%);
   bottom: -80px; left: -60px;
 }
 
@@ -226,7 +231,7 @@ a { color: var(--blue); }
 }
 
 .button-hero {
-  background: var(--blue);
+  background: var(--accent);
   color: #fff !important;
   font-size: 1rem;
   padding: 13px 28px;
@@ -236,7 +241,7 @@ a { color: var(--blue); }
   transition: background 0.15s, transform 0.1s;
   display: inline-block;
 }
-.button-hero:hover { background: var(--blue-hover); transform: translateY(-1px); }
+.button-hero:hover { background: var(--accent-hover); transform: translateY(-1px); }
 
 /* ═══════════════════════════════════════════
    BUBBLE INSIGHT SECTION
@@ -329,7 +334,7 @@ a { color: var(--blue); }
 
 .bubble-cta-btn {
   display: inline-block;
-  background: var(--blue);
+  background: var(--accent);
   color: #fff !important;
   text-decoration: none;
   padding: 12px 28px;
@@ -338,7 +343,7 @@ a { color: var(--blue); }
   font-size: 0.95rem;
   transition: background 0.15s, transform 0.1s;
 }
-.bubble-cta-btn:hover { background: var(--blue-hover); transform: translateY(-1px); }
+.bubble-cta-btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
 
 /* ═══════════════════════════════════════════
    HOW IT WORKS
@@ -979,7 +984,7 @@ h1 {
 .gate-btn {
   width: 100%;
   padding: 11px;
-  background: var(--blue);
+  background: var(--accent);
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -989,7 +994,7 @@ h1 {
   cursor: pointer;
   transition: background 0.15s;
 }
-.gate-btn:hover:not(:disabled) { background: var(--blue-hover); }
+.gate-btn:hover:not(:disabled) { background: var(--accent-hover); }
 .gate-btn:disabled { opacity: 0.5; cursor: default; }
 
 .gate-error {
@@ -1172,8 +1177,8 @@ h1 {
    WELCOME BANNER (discover)
 ═══════════════════════════════════════════ */
 .welcome-banner {
-  background: linear-gradient(135deg, rgba(26,115,232,0.08) 0%, rgba(52,168,83,0.06) 100%);
-  border: 1px solid rgba(26,115,232,0.2);
+  background: linear-gradient(135deg, rgba(255,0,0,0.06) 0%, rgba(255,0,0,0.03) 100%);
+  border: 1px solid rgba(255,0,0,0.15);
   border-radius: var(--radius-lg);
   padding: 28px 32px 24px;
   margin-bottom: 36px;
@@ -1208,13 +1213,13 @@ h1 {
 
 .welcome-filter-badge {
   display: inline-block;
-  background: var(--blue-subtle);
-  color: var(--blue);
+  background: var(--accent-subtle);
+  color: var(--accent);
   font-size: 0.75rem;
   font-weight: 600;
   padding: 2px 10px;
   border-radius: 20px;
-  border: 1px solid rgba(26,115,232,0.2);
+  border: 1px solid rgba(255,0,0,0.2);
 }
 
 .welcome-grid { margin-bottom: 0; }

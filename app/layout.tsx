@@ -33,7 +33,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang={locale}>
       <body>
         <nav className="site-nav">
-          <a href="/" className="site-nav-logo">Feed<span>Lens</span></a>
+          <a href="/" className="site-nav-logo">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style={{display:'inline-block',verticalAlign:'middle',marginRight:7,marginBottom:2}}>
+              <rect width="20" height="20" rx="5" fill="#ff0000"/>
+              <circle cx="10" cy="10" r="4" fill="none" stroke="white" strokeWidth="1.5"/>
+              <circle cx="10" cy="10" r="1.5" fill="white"/>
+            </svg>
+            Feed<span>Lens</span>
+          </a>
           <a href="/discover" className="site-nav-link">{d.nav.discover}</a>
           <div className="site-nav-right">
             <LanguageSwitcher current={locale} label={d.nav.langSwitch} />
