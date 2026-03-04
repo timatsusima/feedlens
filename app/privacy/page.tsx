@@ -79,7 +79,7 @@ function PrivacyEn() {
       <h2>Contact</h2>
       <p>
         Questions or deletion requests:{' '}
-        <a href="mailto:privacy@feedlens.app">privacy@feedlens.app</a>
+        <a href="mailto:akira.kumo@proton.me">akira.kumo@proton.me</a>
       </p>
     </>
   );
@@ -139,7 +139,7 @@ function PrivacyRu() {
       <h2>Контакты</h2>
       <p>
         Вопросы или запросы на удаление:{' '}
-        <a href="mailto:privacy@feedlens.app">privacy@feedlens.app</a>
+        <a href="mailto:akira.kumo@proton.me">akira.kumo@proton.me</a>
       </p>
     </>
   );
