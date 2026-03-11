@@ -325,15 +325,61 @@ interface LocationsData {
   cities: string[];
 }
 
+const LOCATIONS_FALLBACK: LocationsData = {
+  countries: [
+    { code: 'RU', name: 'Russia' }, { code: 'KZ', name: 'Kazakhstan' }, { code: 'UA', name: 'Ukraine' },
+    { code: 'BY', name: 'Belarus' }, { code: 'US', name: 'United States' }, { code: 'GB', name: 'United Kingdom' },
+    { code: 'DE', name: 'Germany' }, { code: 'FR', name: 'France' }, { code: 'NL', name: 'Netherlands' },
+    { code: 'PL', name: 'Poland' }, { code: 'IT', name: 'Italy' }, { code: 'ES', name: 'Spain' },
+    { code: 'TR', name: 'Turkey' }, { code: 'CA', name: 'Canada' }, { code: 'AU', name: 'Australia' },
+    { code: 'BR', name: 'Brazil' }, { code: 'MX', name: 'Mexico' }, { code: 'AR', name: 'Argentina' },
+    { code: 'IN', name: 'India' }, { code: 'CN', name: 'China' }, { code: 'JP', name: 'Japan' },
+    { code: 'KR', name: 'South Korea' }, { code: 'SG', name: 'Singapore' }, { code: 'ID', name: 'Indonesia' },
+    { code: 'TH', name: 'Thailand' }, { code: 'VN', name: 'Vietnam' }, { code: 'PH', name: 'Philippines' },
+    { code: 'MY', name: 'Malaysia' }, { code: 'AE', name: 'United Arab Emirates' }, { code: 'SA', name: 'Saudi Arabia' },
+    { code: 'IL', name: 'Israel' }, { code: 'EG', name: 'Egypt' }, { code: 'ZA', name: 'South Africa' },
+    { code: 'CZ', name: 'Czech Republic' }, { code: 'AT', name: 'Austria' }, { code: 'CH', name: 'Switzerland' },
+    { code: 'SE', name: 'Sweden' }, { code: 'NO', name: 'Norway' }, { code: 'FI', name: 'Finland' },
+    { code: 'DK', name: 'Denmark' }, { code: 'PT', name: 'Portugal' }, { code: 'GR', name: 'Greece' },
+    { code: 'RO', name: 'Romania' }, { code: 'HU', name: 'Hungary' }, { code: 'BE', name: 'Belgium' },
+    { code: 'UZ', name: 'Uzbekistan' }, { code: 'AZ', name: 'Azerbaijan' }, { code: 'GE', name: 'Georgia' },
+    { code: 'AM', name: 'Armenia' }, { code: 'LV', name: 'Latvia' }, { code: 'LT', name: 'Lithuania' },
+    { code: 'EE', name: 'Estonia' }, { code: 'MD', name: 'Moldova' }, { code: 'KG', name: 'Kyrgyzstan' },
+    { code: 'TJ', name: 'Tajikistan' }, { code: 'TM', name: 'Turkmenistan' }, { code: 'CO', name: 'Colombia' },
+    { code: 'PE', name: 'Peru' }, { code: 'CL', name: 'Chile' }, { code: 'NZ', name: 'New Zealand' },
+  ].sort((a, b) => a.name.localeCompare(b.name)),
+  cities: [
+    'Moscow', 'Saint Petersburg', 'Novosibirsk', 'Yekaterinburg', 'Kazan', 'Nizhny Novgorod',
+    'Samara', 'Rostov-on-Don', 'Krasnoyarsk', 'Omsk', 'Vladivostok', 'Voronezh', 'Krasnodar',
+    'Almaty', 'Astana', 'Shymkent', 'Karaganda', 'Aktobe', 'Taraz', 'Kyiv', 'Kharkiv', 'Odesa',
+    'Dnipro', 'Lviv', 'Minsk', 'Gomel', 'Mogilev', 'London', 'Berlin', 'Paris', 'Amsterdam',
+    'Madrid', 'Rome', 'Vienna', 'Prague', 'Warsaw', 'Budapest', 'Bucharest', 'Athens', 'Lisbon',
+    'Brussels', 'Zurich', 'Stockholm', 'Oslo', 'Copenhagen', 'Helsinki', 'Dublin', 'Istanbul',
+    'Milan', 'Barcelona', 'Munich', 'Hamburg', 'Riga', 'Tallinn', 'Vilnius', 'Chisinau',
+    'Tbilisi', 'Yerevan', 'Baku', 'New York', 'Los Angeles', 'Chicago', 'Houston', 'San Francisco',
+    'Miami', 'Toronto', 'Vancouver', 'Montreal', 'Mexico City', 'São Paulo', 'Rio de Janeiro',
+    'Buenos Aires', 'Bogotá', 'Lima', 'Santiago', 'Tokyo', 'Seoul', 'Singapore', 'Hong Kong',
+    'Shanghai', 'Beijing', 'Taipei', 'Bangkok', 'Jakarta', 'Kuala Lumpur', 'Manila', 'Ho Chi Minh City',
+    'Mumbai', 'Delhi', 'Dubai', 'Riyadh', 'Tel Aviv', 'Tashkent', 'Bishkek', 'Dushanbe', 'Ashgabat',
+    'Cairo', 'Lagos', 'Johannesburg', 'Nairobi', 'Casablanca', 'Sydney', 'Melbourne', 'Auckland',
+  ].sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' })),
+};
+
 let locationsCache: LocationsData | null = null;
 
 async function fetchLocations(): Promise<LocationsData> {
   if (locationsCache) return locationsCache;
-  const res = await fetch(`${API_URL}/api/locations`);
-  if (!res.ok) throw new Error('Failed to load locations');
-  const data = await res.json() as LocationsData;
-  locationsCache = data;
-  return data;
+  try {
+    const res = await fetch(`${API_URL}/api/locations`);
+    if (res.ok) {
+      const data = await res.json() as LocationsData;
+      if (Array.isArray(data.cities) && Array.isArray(data.countries) && data.cities.length > 0) {
+        locationsCache = data;
+        return data;
+      }
+    }
+  } catch { /* fall through to fallback */ }
+  return LOCATIONS_FALLBACK;
 }
 
 // ─── Publish modal ─────────────────────────────────────────────────────────
@@ -341,12 +387,7 @@ async function fetchLocations(): Promise<LocationsData> {
 async function showPublishModal(videos: VideoData[]): Promise<void> {
   removeElement('feedlens-modal');
 
-  let locations: LocationsData;
-  try {
-    locations = await fetchLocations();
-  } catch {
-    locations = { countries: [], cities: [] };
-  }
+  const locations = await fetchLocations();
 
   const citiesOptions = locations.cities.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join('');
   const countriesOptions = locations.countries.map(c => `<option value="${esc(c.code)}">${esc(c.name)}</option>`).join('');
