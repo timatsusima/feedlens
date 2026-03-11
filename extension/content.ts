@@ -323,9 +323,34 @@ function waitForVideos(): Promise<void> {
 interface LocationsData {
   countries: { code: string; name: string }[];
   cities: string[];
+  citiesByCountry?: Record<string, string[]>;
 }
 
 const LOCATIONS_FALLBACK: LocationsData = {
+  citiesByCountry: {
+    RU: ['Moscow', 'Saint Petersburg', 'Novosibirsk', 'Yekaterinburg', 'Kazan', 'Nizhny Novgorod', 'Samara', 'Rostov-on-Don', 'Krasnoyarsk', 'Omsk', 'Vladivostok', 'Voronezh', 'Krasnodar', 'Saratov', 'Tolyatti'],
+    KZ: ['Almaty', 'Astana', 'Shymkent', 'Karaganda', 'Aktobe', 'Taraz'],
+    UA: ['Kyiv', 'Kharkiv', 'Odesa', 'Dnipro', 'Lviv'],
+    BY: ['Minsk', 'Gomel', 'Mogilev'],
+    US: ['New York', 'Los Angeles', 'Chicago', 'Houston', 'San Francisco', 'Miami', 'Boston', 'Seattle'],
+    GB: ['London'], DE: ['Berlin', 'Munich', 'Hamburg', 'Cologne', 'Frankfurt'],
+    FR: ['Paris'], NL: ['Amsterdam'], PL: ['Warsaw'], IT: ['Rome', 'Milan'],
+    ES: ['Madrid', 'Barcelona'], TR: ['Istanbul'], CA: ['Toronto', 'Vancouver', 'Montreal'],
+    AU: ['Sydney', 'Melbourne'], BR: ['São Paulo', 'Rio de Janeiro'], MX: ['Mexico City'],
+    AR: ['Buenos Aires'], IN: ['Mumbai', 'Delhi'], CN: ['Shanghai', 'Beijing'],
+    JP: ['Tokyo'], KR: ['Seoul'], SG: ['Singapore'], ID: ['Jakarta'], TH: ['Bangkok'],
+    VN: ['Ho Chi Minh City'], PH: ['Manila'], MY: ['Kuala Lumpur'], AE: ['Dubai'],
+    SA: ['Riyadh'], IL: ['Tel Aviv'], EG: ['Cairo'], ZA: ['Johannesburg'],
+    NG: ['Lagos'], KE: ['Nairobi'], CZ: ['Prague'], AT: ['Vienna'], CH: ['Zurich'],
+    SE: ['Stockholm'], NO: ['Oslo'], FI: ['Helsinki'], DK: ['Copenhagen'],
+    PT: ['Lisbon'], GR: ['Athens'], RO: ['Bucharest'], HU: ['Budapest'], BE: ['Brussels'],
+    UZ: ['Tashkent'], AZ: ['Baku'], GE: ['Tbilisi'], AM: ['Yerevan'],
+    LV: ['Riga'], LT: ['Vilnius'], EE: ['Tallinn'], MD: ['Chisinau'],
+    KG: ['Bishkek'], TJ: ['Dushanbe'], TM: ['Ashgabat'], CO: ['Bogotá'],
+    PE: ['Lima'], CL: ['Santiago'], TW: ['Taipei'], HK: ['Hong Kong'], NZ: ['Auckland'],
+    MA: ['Casablanca'],
+  },
+  cities: [] as string[],
   countries: [
     { code: 'RU', name: 'Russia' }, { code: 'KZ', name: 'Kazakhstan' }, { code: 'UA', name: 'Ukraine' },
     { code: 'BY', name: 'Belarus' }, { code: 'US', name: 'United States' }, { code: 'GB', name: 'United Kingdom' },
@@ -348,21 +373,6 @@ const LOCATIONS_FALLBACK: LocationsData = {
     { code: 'TJ', name: 'Tajikistan' }, { code: 'TM', name: 'Turkmenistan' }, { code: 'CO', name: 'Colombia' },
     { code: 'PE', name: 'Peru' }, { code: 'CL', name: 'Chile' }, { code: 'NZ', name: 'New Zealand' },
   ].sort((a, b) => a.name.localeCompare(b.name)),
-  cities: [
-    'Moscow', 'Saint Petersburg', 'Novosibirsk', 'Yekaterinburg', 'Kazan', 'Nizhny Novgorod',
-    'Samara', 'Rostov-on-Don', 'Krasnoyarsk', 'Omsk', 'Vladivostok', 'Voronezh', 'Krasnodar',
-    'Almaty', 'Astana', 'Shymkent', 'Karaganda', 'Aktobe', 'Taraz', 'Kyiv', 'Kharkiv', 'Odesa',
-    'Dnipro', 'Lviv', 'Minsk', 'Gomel', 'Mogilev', 'London', 'Berlin', 'Paris', 'Amsterdam',
-    'Madrid', 'Rome', 'Vienna', 'Prague', 'Warsaw', 'Budapest', 'Bucharest', 'Athens', 'Lisbon',
-    'Brussels', 'Zurich', 'Stockholm', 'Oslo', 'Copenhagen', 'Helsinki', 'Dublin', 'Istanbul',
-    'Milan', 'Barcelona', 'Munich', 'Hamburg', 'Riga', 'Tallinn', 'Vilnius', 'Chisinau',
-    'Tbilisi', 'Yerevan', 'Baku', 'New York', 'Los Angeles', 'Chicago', 'Houston', 'San Francisco',
-    'Miami', 'Toronto', 'Vancouver', 'Montreal', 'Mexico City', 'São Paulo', 'Rio de Janeiro',
-    'Buenos Aires', 'Bogotá', 'Lima', 'Santiago', 'Tokyo', 'Seoul', 'Singapore', 'Hong Kong',
-    'Shanghai', 'Beijing', 'Taipei', 'Bangkok', 'Jakarta', 'Kuala Lumpur', 'Manila', 'Ho Chi Minh City',
-    'Mumbai', 'Delhi', 'Dubai', 'Riyadh', 'Tel Aviv', 'Tashkent', 'Bishkek', 'Dushanbe', 'Ashgabat',
-    'Cairo', 'Lagos', 'Johannesburg', 'Nairobi', 'Casablanca', 'Sydney', 'Melbourne', 'Auckland',
-  ].sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' })),
 };
 
 let locationsCache: LocationsData | null = null;
@@ -373,6 +383,10 @@ async function fetchLocations(): Promise<LocationsData> {
     const res = await fetch(`${API_URL}/api/locations`);
     if (res.ok) {
       const data = await res.json() as LocationsData;
+      if (data.citiesByCountry && Array.isArray(data.countries) && Object.keys(data.citiesByCountry).length > 0) {
+        locationsCache = { ...data, cities: data.cities ?? [] };
+        return locationsCache;
+      }
       if (Array.isArray(data.cities) && Array.isArray(data.countries) && data.cities.length > 0) {
         locationsCache = data;
         return data;
@@ -388,8 +402,8 @@ async function showPublishModal(videos: VideoData[]): Promise<void> {
   removeElement('feedlens-modal');
 
   const locations = await fetchLocations();
+  const citiesByCountry = locations.citiesByCountry ?? {};
 
-  const citiesOptions = locations.cities.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join('');
   const countriesOptions = locations.countries.map(c => `<option value="${esc(c.code)}">${esc(c.name)}</option>`).join('');
 
   // Compute quality flags up-front for display in the modal
@@ -426,17 +440,16 @@ async function showPublishModal(videos: VideoData[]): Promise<void> {
               placeholder="${t('modal_ph_nickname')}">
           </div>
           <div class="feedlens-form-group">
-            <label for="fl-city">${t('modal_lbl_city')}</label>
-            <select id="fl-city" name="city">
-              <option value="">${t('modal_opt_none')}</option>
-              ${citiesOptions}
-            </select>
-          </div>
-          <div class="feedlens-form-group">
             <label for="fl-country">${t('modal_lbl_country')}</label>
             <select id="fl-country" name="country">
               <option value="">${t('modal_opt_none')}</option>
               ${countriesOptions}
+            </select>
+          </div>
+          <div class="feedlens-form-group">
+            <label for="fl-city">${t('modal_lbl_city')}</label>
+            <select id="fl-city" name="city">
+              <option value="">${t('modal_opt_none')}</option>
             </select>
           </div>
           <div class="feedlens-form-group">
@@ -465,6 +478,25 @@ async function showPublishModal(videos: VideoData[]): Promise<void> {
   `;
 
   document.body.appendChild(modal);
+
+  const countrySelect = modal.querySelector('#fl-country') as HTMLSelectElement;
+  const citySelect = modal.querySelector('#fl-city') as HTMLSelectElement;
+
+  function updateCityOptions(): void {
+    const country = countrySelect?.value ?? '';
+    const cities = country ? (citiesByCountry[country] ?? []) : [];
+    if (!citySelect) return;
+    citySelect.innerHTML = `<option value="">${t('modal_opt_none')}</option>`;
+    cities.forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c;
+      opt.textContent = c;
+      citySelect.appendChild(opt);
+    });
+    citySelect.value = '';
+  }
+
+  countrySelect?.addEventListener('change', updateCityOptions);
 
   const form = modal.querySelector('#feedlens-form') as HTMLFormElement;
   form.onsubmit = async (e) => {

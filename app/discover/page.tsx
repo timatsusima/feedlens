@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
 import { getLocale } from '@/lib/locale';
 import { getDictionary } from '@/lib/dictionaries';
-import { COUNTRIES, CITIES } from '@/lib/locations';
+import { COUNTRIES, CITIES, CITIES_BY_COUNTRY } from '@/lib/locations';
 import { snapshotFlag } from '@/lib/flag';
 import UnlockGate from './UnlockGate';
 import DiscoverFilters, { type FilterValues } from './DiscoverFilters';
@@ -219,6 +219,7 @@ export default async function DiscoverPage({ searchParams }: PageProps) {
             clear:   dis.filterClear,
           }}
           cities={CITIES}
+          citiesByCountry={CITIES_BY_COUNTRY}
           countries={COUNTRIES}
         />
       </Suspense>

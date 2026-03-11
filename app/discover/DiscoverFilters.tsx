@@ -11,15 +11,19 @@ export interface FilterValues {
 }
 
 interface Props {
-  values:      FilterValues;
-  placeholder: { q: string };
-  labels:      { q: string; city: string; age: string; country: string; clear: string };
-  ageBuckets:  string[];
-  cities:      string[];
-  countries:   { code: string; name: string }[];
+  values:         FilterValues;
+  placeholder:    { q: string };
+  labels:         { q: string; city: string; age: string; country: string; clear: string };
+  ageBuckets:     string[];
+  cities:         string[];
+  citiesByCountry: Record<string, string[]>;
+  countries:      { code: string; name: string }[];
 }
 
-export default function DiscoverFilters({ values, placeholder, labels, ageBuckets, cities, countries }: Props) {
+export default function DiscoverFilters({ values, placeholder, labels, ageBuckets, cities, citiesByCountry, countries }: Props) {
+  const cityOptions = values.country
+    ? (citiesByCountry[values.country] ?? [])
+    : cities;
   const router      = useRouter();
   const pathname    = usePathname();
   const searchParams = useSearchParams();
@@ -30,7 +34,7 @@ export default function DiscoverFilters({ values, placeholder, labels, ageBucket
       const params = new URLSearchParams(searchParams.toString());
       if (value) params.set(key, value);
       else        params.delete(key);
-      // Reset to page 1 on any filter change
+      if (key === 'country') params.delete('city');
       params.delete('page');
       startTransition(() => {
         router.replace(`${pathname}?${params.toString()}`);
@@ -61,24 +65,6 @@ export default function DiscoverFilters({ values, placeholder, labels, ageBucket
         />
       </div>
 
-      {/* City */}
-      <div className="discover-filter-field">
-        <label className="discover-filter-label">{labels.city}</label>
-        <select
-          className="discover-filter-select"
-          value={values.city}
-          onChange={e => update('city', e.target.value)}
-        >
-          <option value="">—</option>
-          {values.city && !cities.includes(values.city) && (
-            <option value={values.city}>{values.city}</option>
-          )}
-          {cities.map(c => (
-            <option key={c} value={c}>{c}</option>
-          ))}
-        </select>
-      </div>
-
       {/* Country */}
       <div className="discover-filter-field">
         <label className="discover-filter-label">{labels.country}</label>
@@ -93,6 +79,24 @@ export default function DiscoverFilters({ values, placeholder, labels, ageBucket
           )}
           {countries.map(c => (
             <option key={c.code} value={c.code}>{c.name}</option>
+          ))}
+        </select>
+      </div>
+
+      {/* City (filtered by country) */}
+      <div className="discover-filter-field">
+        <label className="discover-filter-label">{labels.city}</label>
+        <select
+          className="discover-filter-select"
+          value={values.city}
+          onChange={e => update('city', e.target.value)}
+        >
+          <option value="">—</option>
+          {values.city && !cityOptions.includes(values.city) && (
+            <option value={values.city}>{values.city}</option>
+          )}
+          {cityOptions.map(c => (
+            <option key={c} value={c}>{c}</option>
           ))}
         </select>
       </div>
