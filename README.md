@@ -214,8 +214,8 @@ Built with modern web technologies and a privacy-first approach.
 
 ## 📧 Contact
 
-- **Issues**: [GitHub Issues](https://github.com/yourusername/feedlens/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/feedlens/discussions)
+- **Issues**: [GitHub Issues](https://github.com/timatsusima/feedlens/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/timatsusima/feedlens/discussions)
 - **Email**: akira.kumo@proton.me
 
 ---

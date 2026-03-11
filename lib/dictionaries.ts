@@ -69,7 +69,7 @@ const en = {
 
     // Filters
     filterQ:           'Name',
-    filterQPh:         'Search by name…',
+    filterQPh:         'Search name, city, description…',
     filterCity:        'City',
     filterCityPh:      'e.g. Moscow',
     filterCountry:     'Country',
@@ -214,7 +214,7 @@ const ru: typeof en = {
 
     // Filters
     filterQ:           'Имя',
-    filterQPh:         'Поиск по имени…',
+    filterQPh:         'Имя, город, описание…',
     filterCity:        'Город',
     filterCityPh:      'напр. Алматы',
     filterCountry:     'Страна',

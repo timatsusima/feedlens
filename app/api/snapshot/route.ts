@@ -27,6 +27,7 @@ const VideoSchema = z.object({
 const SnapshotSchema = z.object({
   nickname:    z.string().min(1).max(50).trim(),
   city:        z.string().max(50).trim().optional(),
+  country:     z.string().length(2).regex(/^[A-Z]{2}$/).optional(),
   age_bucket:  z.enum(['18-24', '25-34', '35-44', '45+']).optional(),
   description: z.string().max(500).trim().optional(),
 
@@ -139,7 +140,7 @@ export async function POST(request: NextRequest) {
         collectedAt:   data.collectedAt ? new Date(data.collectedAt) : new Date(),
         timezone:      data.timezone ?? null,
         locale:        data.locale ?? null,
-        country:       cityToCountryCode(data.city) || timezoneToCountryCode(data.timezone) || null,
+        country:       data.country ?? cityToCountryCode(data.city) ?? timezoneToCountryCode(data.timezone) ?? null,
 
         targetCount, collectedCount, uniqueVideoCount, duplicateCount, isPartial,
         collectorVersion: data.collectorVersion ?? null,

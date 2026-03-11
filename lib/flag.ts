@@ -102,14 +102,35 @@ const CITY_COUNTRY: Record<string, string> = {
   // Russia
   'омск': 'RU', 'omsk': 'RU',
   'москва': 'RU', 'moscow': 'RU', 'спб': 'RU', 'санкт-петербург': 'RU',
+  'saint petersburg': 'RU',
   'екатеринбург': 'RU', 'yekaterinburg': 'RU', 'новосибирск': 'RU',
-  'нижний новгород': 'RU', 'казань': 'RU', 'самара': 'RU',
-  'ростов-на-дону': 'RU', 'красноярск': 'RU', 'владивосток': 'RU',
+  'нижний новгород': 'RU', 'nizhny novgorod': 'RU', 'казань': 'RU', 'самара': 'RU',
+  'ростов-на-дону': 'RU', 'rostov-on-don': 'RU', 'красноярск': 'RU', 'владивосток': 'RU',
+  'voronezh': 'RU', 'krasnodar': 'RU', 'saratov': 'RU', 'tolyatti': 'RU',
   // Kazakhstan
   'алматы': 'KZ', 'almaty': 'KZ', 'астана': 'KZ', 'astana': 'KZ',
-  'нур-султан': 'KZ', 'шымкент': 'KZ', 'караганда': 'KZ',
+  'нур-султан': 'KZ', 'шымкент': 'KZ', 'shymkent': 'KZ', 'караганда': 'KZ',
+  'karaganda': 'KZ', 'aktobe': 'KZ', 'taraz': 'KZ',
   // Ukraine, Belarus, etc.
-  'киев': 'UA', 'kyiv': 'UA', 'kiev': 'UA', 'минск': 'BY', 'minsk': 'BY',
+  'киев': 'UA', 'kyiv': 'UA', 'kiev': 'UA', 'kharkiv': 'UA', 'odesa': 'UA',
+  'dnipro': 'UA', 'lviv': 'UA',
+  'минск': 'BY', 'minsk': 'BY', 'gomel': 'BY', 'mogilev': 'BY',
+  // Major world cities (for dropdown-derived country when not explicitly set)
+  'london': 'GB', 'berlin': 'DE', 'paris': 'FR', 'amsterdam': 'NL', 'madrid': 'ES',
+  'rome': 'IT', 'vienna': 'AT', 'prague': 'CZ', 'warsaw': 'PL', 'budapest': 'HU',
+  'bucharest': 'RO', 'athens': 'GR', 'lisbon': 'PT', 'brussels': 'BE', 'zurich': 'CH',
+  'stockholm': 'SE', 'oslo': 'NO', 'copenhagen': 'DK', 'helsinki': 'FI', 'dublin': 'IE',
+  'istanbul': 'TR', 'milan': 'IT', 'barcelona': 'ES', 'munich': 'DE', 'hamburg': 'DE',
+  'new york': 'US', 'los angeles': 'US', 'chicago': 'US', 'houston': 'US',
+  'san francisco': 'US', 'miami': 'US', 'toronto': 'CA', 'vancouver': 'CA',
+  'montreal': 'CA', 'mexico city': 'MX', 'são paulo': 'BR', 'rio de janeiro': 'BR',
+  'buenos aires': 'AR', 'bogotá': 'CO', 'lima': 'PE', 'santiago': 'CL',
+  'tokyo': 'JP', 'seoul': 'KR', 'singapore': 'SG', 'hong kong': 'HK',
+  'shanghai': 'CN', 'beijing': 'CN', 'taipei': 'TW', 'bangkok': 'TH',
+  'jakarta': 'ID', 'kuala lumpur': 'MY', 'manila': 'PH',
+  'ho chi minh city': 'VN', 'mumbai': 'IN', 'delhi': 'IN',
+  'dubai': 'AE', 'riyadh': 'SA', 'tel aviv': 'IL', 'cairo': 'EG',
+  'sydney': 'AU', 'melbourne': 'AU', 'auckland': 'NZ',
 };
 
 export function cityToCountryCode(city?: string | null): string {

@@ -337,7 +337,7 @@ Yes! Suggested citation:
 
 ```
 FeedLens: Open-source platform for YouTube recommendation snapshots.
-GitHub: https://github.com/yourusername/feedlens
+GitHub: https://github.com/timatsusima/feedlens
 Accessed: [Date]
 ```
 

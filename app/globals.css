@@ -1067,6 +1067,7 @@ h1 {
 }
 .discover-filter-select:focus { border-color: var(--accent); }
 .discover-filter-select option { background: var(--bg-2); }
+.discover-filter-select--country { min-width: 160px; }
 
 .discover-filter-clear {
   height: 36px;

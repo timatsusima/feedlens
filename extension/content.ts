@@ -35,6 +35,7 @@ interface SnapshotPayload {
   // User info
   nickname: string;
   city?: string;
+  country?: string;
   age_bucket?: string;
   description?: string;
 
@@ -117,7 +118,7 @@ async function handlePublish(): Promise<void> {
     throw new Error(t('error_no_videos'));
   }
 
-  showPublishModal(videos);
+  await showPublishModal(videos);
 }
 
 // ─── View flow ─────────────────────────────────────────────────────────────
@@ -170,7 +171,7 @@ function getCollectorVersion(): string {
     const v = chrome.runtime.getManifest().version;
     return `ext/${v}`;
   } catch {
-    return 'ext/1.0.0'; // TODO: keep in sync with manifest
+    return 'ext/unknown';
   }
 }
 
@@ -317,10 +318,38 @@ function waitForVideos(): Promise<void> {
   });
 }
 
+// ─── Locations (for city/country dropdowns) ─────────────────────────────────
+
+interface LocationsData {
+  countries: { code: string; name: string }[];
+  cities: string[];
+}
+
+let locationsCache: LocationsData | null = null;
+
+async function fetchLocations(): Promise<LocationsData> {
+  if (locationsCache) return locationsCache;
+  const res = await fetch(`${API_URL}/api/locations`);
+  if (!res.ok) throw new Error('Failed to load locations');
+  const data = await res.json() as LocationsData;
+  locationsCache = data;
+  return data;
+}
+
 // ─── Publish modal ─────────────────────────────────────────────────────────
 
-function showPublishModal(videos: VideoData[]): void {
+async function showPublishModal(videos: VideoData[]): Promise<void> {
   removeElement('feedlens-modal');
+
+  let locations: LocationsData;
+  try {
+    locations = await fetchLocations();
+  } catch {
+    locations = { countries: [], cities: [] };
+  }
+
+  const citiesOptions = locations.cities.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join('');
+  const countriesOptions = locations.countries.map(c => `<option value="${esc(c.code)}">${esc(c.name)}</option>`).join('');
 
   // Compute quality flags up-front for display in the modal
   const collectedCount   = videos.length;
@@ -357,8 +386,17 @@ function showPublishModal(videos: VideoData[]): void {
           </div>
           <div class="feedlens-form-group">
             <label for="fl-city">${t('modal_lbl_city')}</label>
-            <input type="text" id="fl-city" name="city" maxlength="50"
-              placeholder="${t('modal_ph_city')}">
+            <select id="fl-city" name="city">
+              <option value="">${t('modal_opt_none')}</option>
+              ${citiesOptions}
+            </select>
+          </div>
+          <div class="feedlens-form-group">
+            <label for="fl-country">${t('modal_lbl_country')}</label>
+            <select id="fl-country" name="country">
+              <option value="">${t('modal_opt_none')}</option>
+              ${countriesOptions}
+            </select>
           </div>
           <div class="feedlens-form-group">
             <label for="fl-age">${t('modal_lbl_age')}</label>
@@ -419,12 +457,14 @@ function showPublishModal(videos: VideoData[]): void {
         isPartial,
       };
 
-      const city = (fd.get('city') as string)?.trim();
-      const age  = fd.get('age_bucket') as string;
-      const desc = (fd.get('description') as string)?.trim();
-      if (city) payload.city        = city;
-      if (age)  payload.age_bucket  = age;
-      if (desc) payload.description = desc;
+      const city    = (fd.get('city') as string)?.trim();
+      const country = (fd.get('country') as string)?.trim().toUpperCase();
+      const age     = fd.get('age_bucket') as string;
+      const desc    = (fd.get('description') as string)?.trim();
+      if (city)    payload.city    = city;
+      if (country && country.length === 2) payload.country = country;
+      if (age)     payload.age_bucket  = age;
+      if (desc)    payload.description = desc;
 
       const res = await fetch(`${API_URL}/api/snapshot`, {
         method:  'POST',
@@ -434,7 +474,7 @@ function showPublishModal(videos: VideoData[]): void {
       if (!res.ok) { const err = await res.json(); throw new Error(err.error); }
 
       const data: PublishResult = await res.json();
-      showSuccessScreen(data.id, data.removalToken, data.similar ?? [], city, age);
+      showSuccessScreen(data.id, data.removalToken, data.similar ?? [], city, country || undefined, age);
     } catch (err) {
       alert((err instanceof Error ? err.message : String(err)));
       submitBtn.disabled    = false;
@@ -448,6 +488,7 @@ function showSuccessScreen(
   removalToken: string,
   similar: SimilarSnapshot[],
   city?: string,
+  country?: string,
   ageBucket?: string,
 ): void {
   const modal = document.getElementById('feedlens-modal');
@@ -458,6 +499,7 @@ function showSuccessScreen(
   // Build personalized Discover deep-link (via unlock-and-redirect route)
   const unlockParams = new URLSearchParams({ id: snapshotId, welcome: '1' });
   if (city)      unlockParams.set('city', city);
+  if (country)   unlockParams.set('country', country);
   if (ageBucket) unlockParams.set('age', ageBucket);
   const discoverUrl = `${API_URL}/api/unlock-and-redirect?${unlockParams}`;
 

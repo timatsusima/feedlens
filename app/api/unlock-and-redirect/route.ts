@@ -15,6 +15,7 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const snapshotId = searchParams.get('id') ?? '';
   const city       = searchParams.get('city') ?? '';
+  const country    = searchParams.get('country') ?? '';
   const age        = searchParams.get('age') ?? '';
 
   // Validate UUID format
@@ -42,8 +43,9 @@ export async function GET(request: NextRequest) {
 
   // Build personalized Discover URL
   const discoverParams = new URLSearchParams({ welcome: '1' });
-  if (city)  discoverParams.set('city', city);
-  if (age)   discoverParams.set('age', age);
+  if (city)    discoverParams.set('city', city);
+  if (country) discoverParams.set('country', country);
+  if (age)     discoverParams.set('age', age);
 
   const redirectUrl = new URL(`/discover?${discoverParams}`, request.url);
   return NextResponse.redirect(redirectUrl);

@@ -80,6 +80,12 @@
   "modal_lbl_city": {
     "message": "City"
   },
+  "modal_lbl_country": {
+    "message": "Country"
+  },
+  "modal_opt_none": {
+    "message": "—"
+  },
   "modal_lbl_age": {
     "message": "Age Range"
   },

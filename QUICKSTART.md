@@ -14,7 +14,7 @@ Make sure you have:
 
 ```bash
 # Clone the repository (or download ZIP)
-git clone https://github.com/yourusername/feedlens.git
+git clone https://github.com/timatsusima/feedlens.git
 cd feedlens
 ```
 

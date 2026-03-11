@@ -12,12 +12,14 @@ export interface FilterValues {
 
 interface Props {
   values:      FilterValues;
-  placeholder: { q: string; city: string; country: string };
+  placeholder: { q: string };
   labels:      { q: string; city: string; age: string; country: string; clear: string };
   ageBuckets:  string[];
+  cities:      string[];
+  countries:   { code: string; name: string }[];
 }
 
-export default function DiscoverFilters({ values, placeholder, labels, ageBuckets }: Props) {
+export default function DiscoverFilters({ values, placeholder, labels, ageBuckets, cities, countries }: Props) {
   const router      = useRouter();
   const pathname    = usePathname();
   const searchParams = useSearchParams();
@@ -62,26 +64,37 @@ export default function DiscoverFilters({ values, placeholder, labels, ageBucket
       {/* City */}
       <div className="discover-filter-field">
         <label className="discover-filter-label">{labels.city}</label>
-        <input
-          className="discover-filter-input"
-          type="search"
-          placeholder={placeholder.city}
-          defaultValue={values.city}
+        <select
+          className="discover-filter-select"
+          value={values.city}
           onChange={e => update('city', e.target.value)}
-        />
+        >
+          <option value="">—</option>
+          {values.city && !cities.includes(values.city) && (
+            <option value={values.city}>{values.city}</option>
+          )}
+          {cities.map(c => (
+            <option key={c} value={c}>{c}</option>
+          ))}
+        </select>
       </div>
 
       {/* Country */}
       <div className="discover-filter-field">
         <label className="discover-filter-label">{labels.country}</label>
-        <input
-          className="discover-filter-input discover-filter-input--sm"
-          type="search"
-          placeholder={placeholder.country}
-          defaultValue={values.country}
-          maxLength={2}
-          onChange={e => update('country', e.target.value.toUpperCase())}
-        />
+        <select
+          className="discover-filter-select discover-filter-select--country"
+          value={values.country}
+          onChange={e => update('country', e.target.value)}
+        >
+          <option value="">—</option>
+          {values.country && !countries.some(c => c.code === values.country) && (
+            <option value={values.country}>{values.country}</option>
+          )}
+          {countries.map(c => (
+            <option key={c.code} value={c.code}>{c.name}</option>
+          ))}
+        </select>
       </div>
 
       {/* Age bucket */}

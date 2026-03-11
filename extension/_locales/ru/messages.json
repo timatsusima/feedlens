@@ -80,6 +80,12 @@
   "modal_lbl_city": {
     "message": "Город"
   },
+  "modal_lbl_country": {
+    "message": "Страна"
+  },
+  "modal_opt_none": {
+    "message": "—"
+  },
   "modal_lbl_age": {
     "message": "Возраст"
   },

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
 import { getLocale } from '@/lib/locale';
 import { getDictionary } from '@/lib/dictionaries';
+import { COUNTRIES, CITIES } from '@/lib/locations';
 import { snapshotFlag } from '@/lib/flag';
 import UnlockGate from './UnlockGate';
 import DiscoverFilters, { type FilterValues } from './DiscoverFilters';
@@ -67,11 +68,17 @@ export default async function DiscoverPage({ searchParams }: PageProps) {
 
   const hasFilters = fq || filterCity || filterAge || fCountry;
 
-  // Build Prisma WHERE
+  // Build Prisma WHERE: q searches nickname, city, description
   const baseWhere = {
     deletedAt: null as null,
-    ...(fq         ? { nickname:  { contains: fq,            mode: 'insensitive' as const } } : {}),
-    ...(filterCity ? { city:      { contains: filterCity,    mode: 'insensitive' as const } } : {}),
+    ...(fq ? {
+      OR: [
+        { nickname:   { contains: fq, mode: 'insensitive' as const } },
+        { city:      { contains: fq, mode: 'insensitive' as const } },
+        { description: { contains: fq, mode: 'insensitive' as const } },
+      ],
+    } : {}),
+    ...(filterCity ? { city: filterCity } : {}),
     ...(filterAge  ? { ageBucket: filterAge } : {}),
     ...(fCountry   ? { country: fCountry } : {}),
   };
@@ -203,7 +210,7 @@ export default async function DiscoverPage({ searchParams }: PageProps) {
         <DiscoverFilters
           values={filterValues}
           ageBuckets={AGE_BUCKETS}
-          placeholder={{ q: dis.filterQPh, city: dis.filterCityPh, country: dis.filterCountryPh }}
+          placeholder={{ q: dis.filterQPh }}
           labels={{
             q:       dis.filterQ,
             city:    dis.filterCity,
@@ -211,6 +218,8 @@ export default async function DiscoverPage({ searchParams }: PageProps) {
             age:     dis.filterAge,
             clear:   dis.filterClear,
           }}
+          cities={CITIES}
+          countries={COUNTRIES}
         />
       </Suspense>
 
