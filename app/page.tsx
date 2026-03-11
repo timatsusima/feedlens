@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getLocale } from '@/lib/locale';
 import { getDictionary } from '@/lib/dictionaries';
+import { EXTENSION_CHROME_STORE_URL } from '@/lib/constants';
 
 export default async function Home() {
   const locale = await getLocale();
@@ -110,7 +111,11 @@ export default async function Home() {
       <section className="cta container">
         <h2>{h.ctaTitle}</h2>
         <ol>
-          <li>{h.ctaStep1}</li>
+          <li>
+            <a href={EXTENSION_CHROME_STORE_URL} target="_blank" rel="noopener noreferrer">
+              {h.ctaStep1}
+            </a>
+          </li>
           <li>{h.ctaStep2}</li>
           <li>{h.ctaStep3}</li>
         </ol>

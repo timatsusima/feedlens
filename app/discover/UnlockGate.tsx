@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { EXTENSION_CHROME_STORE_URL } from '@/lib/constants';
 import { useRouter } from 'next/navigation';
 import type { Dict } from '@/lib/dictionaries';
 
@@ -68,7 +69,11 @@ export default function UnlockGate({ d }: Props) {
           <div className="gate-step">
             <span className="gate-step-num">1</span>
             <div>
-              <strong>{g.step1Title}</strong>
+              <strong>
+                <a href={EXTENSION_CHROME_STORE_URL} target="_blank" rel="noopener noreferrer">
+                  {g.step1Title}
+                </a>
+              </strong>
               <p>{g.step1Text}</p>
             </div>
           </div>
