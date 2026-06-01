@@ -62,6 +62,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <footer className="site-footer">
           <span>© 2026 FeedLens</span>
           <a href="/privacy">{d.nav.privacy}</a>
+          <a href="https://tushnitsky.com" target="_blank" rel="noopener noreferrer">tushnitsky.com</a>
         </footer>
         <Analytics />
         </ThemeProvider>
